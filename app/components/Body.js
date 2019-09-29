@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import DepopDisplay from './DepopDisplay';
 import Sidebar from './Sidebar';
 
@@ -9,10 +10,12 @@ export default class Body extends React.Component {
 		this.state = {
 			activeModules: [
 				'depop'
-			]
+			],
+			depopProducts: []
 		};
 
 		this.handleModuleChange = this.handleModuleChange.bind(this);
+		this.handleDepopProductsUpdate = this.handleDepopProductsUpdate.bind(this);
 	}
 
 	handleModuleChange(name) {
@@ -27,22 +30,45 @@ export default class Body extends React.Component {
 		})
 	}
 
+	handleDepopProductsUpdate(products) {
+		this.setState({
+			depopProducts: products
+		});
+	}
+
 	render() {
 		return (
 			<div className="body">
-				<BodyContent activeModules={this.state.activeModules} />
-				<Sidebar activeModules={this.state.activeModules} handleModuleChange={this.handleModuleChange} />
+				<BodyContent 
+					activeModules={this.state.activeModules} 
+					handleDepopProductsUpdate={this.handleDepopProductsUpdate} 
+					depopProducts={this.state.depopProducts} 
+				/>
+				<Sidebar 
+					activeModules={this.state.activeModules} 
+					handleModuleChange={this.handleModuleChange} 
+				/>
 			</div>
 		);
 	}
 }
 
-function BodyContent({ activeModules }) {
+function BodyContent({ activeModules, handleModuleChange, depopProducts, handleDepopProductsUpdate }) {
 	return (
 		<div className="body-content">
 			{ activeModules.includes('depop') && 
-				<DepopDisplay />
-			}		
+				<DepopDisplay 
+					handleDepopProductsUpdate={handleDepopProductsUpdate} 
+					products={depopProducts} 
+				/>
+			}
 		</div>
 	)
+}
+
+BodyContent.propTypes = {
+	activeModules: PropTypes.array.isRequired,
+	handleModuleChange: PropTypes.func.isRequired,
+	depopProducts: PropTypes.array.isRequired,
+	handleDepopProductsUpdate: PropTypes.func.isRequired
 }

@@ -1,16 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { getDepopProducts } from '../utils/api';
 
 export default class DepopDisplay extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			products: []
-		}
+		this.state = {}
+
+		this.updateProducts = this.updateProducts.bind(this);
 	}
 
 	componentDidMount() {
+		if (this.props.products.length === 0) {
+			this.updateProducts();
+		}
+	}
+
+	updateProducts() {
 		getDepopProducts()
 			.then((data) => {
 				const products = data.map(product => {
@@ -22,14 +29,11 @@ export default class DepopDisplay extends React.Component {
 						price
 					}
 				});
-				this.setState({
-					products
-				})
+				this.props.handleDepopProductsUpdate(products);
 			})
 	}
 
 	render() {
-		console.log(this.state.products);
 		return (
 			<div className="depop-display module">
 				<div className="module-inner">
@@ -37,14 +41,20 @@ export default class DepopDisplay extends React.Component {
 						<h3>depop</h3>
 					</div>
 					<div className="module-content">
-						{ this.state.products.length > 0 && 
-							<ProductTable products={this.state.products} />
+						{ this.props.products.length > 0
+							? <ProductTable products={this.props.products} />
+							: <p>loading...</p>
 						}
 					</div>
 				</div>
 			</div>
 		)
 	}
+}
+
+DepopDisplay.propTypes = {
+	handleDepopProductsUpdate: PropTypes.func.isRequired,
+	products: PropTypes.array.isRequired
 }
 
 function ProductTable({ products }) {
@@ -63,6 +73,10 @@ function ProductTable({ products }) {
 	)
 }
 
+ProductTable.propTypes = {
+	products: PropTypes.array.isRequired
+}
+
 function TableRow({ headings, product }) {
 	return (
 		<tr>
@@ -79,4 +93,9 @@ function TableRow({ headings, product }) {
 			}
 		</tr>
 	)
+}
+
+TableRow.propTypes = {
+	product: PropTypes.object.isRequired,
+	headings: PropTypes.array.isRequired
 }

@@ -18,10 +18,22 @@ export default function Sidebar({ activeModules, handleModuleChange }) {
 	)
 }
 
+Sidebar.propTypes = {
+	activeModules: PropTypes.array.isRequired,
+	handleModuleChange: PropTypes.func.isRequired
+}
+
 function ControlOption({ activeModules, handleModuleChange, name }) {
 	return (
 		<li onClick={() => handleModuleChange(name)} className={`control-option ${activeModules.includes(name) && 'active'}`}>
 			{ name }
 		</li>
 	)
+}
+
+
+ControlOption.propTypes = {
+	activeModules: PropTypes.array.isRequired,
+	handleModuleChange: PropTypes.func.isRequired,
+	name: PropTypes.string.isRequired
 }
