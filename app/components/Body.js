@@ -53,7 +53,7 @@ export default class Body extends React.Component {
 	}
 }
 
-function BodyContent({ activeModules, handleModuleChange, depopProducts, handleDepopProductsUpdate }) {
+function BodyContent({ activeModules, depopProducts, handleDepopProductsUpdate }) {
 	return (
 		<div className="body-content">
 			{ activeModules.includes('depop') && 
@@ -68,7 +68,6 @@ function BodyContent({ activeModules, handleModuleChange, depopProducts, handleD
 
 BodyContent.propTypes = {
 	activeModules: PropTypes.array.isRequired,
-	handleModuleChange: PropTypes.func.isRequired,
 	depopProducts: PropTypes.array.isRequired,
 	handleDepopProductsUpdate: PropTypes.func.isRequired
 }
