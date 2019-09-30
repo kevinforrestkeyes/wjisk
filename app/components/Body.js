@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DepopDisplay from './DepopDisplay';
+import ShopifyDisplay from './ShopifyDisplay';
 import Sidebar from './Sidebar';
 
 export default class Body extends React.Component {
@@ -9,7 +10,7 @@ export default class Body extends React.Component {
 
 		this.state = {
 			activeModules: [
-				'depop'
+				'shopify'
 			],
 			depopProducts: []
 		};
@@ -61,6 +62,9 @@ function BodyContent({ activeModules, depopProducts, handleDepopProductsUpdate }
 					handleDepopProductsUpdate={handleDepopProductsUpdate} 
 					products={depopProducts} 
 				/>
+			}
+			{ activeModules.includes('shopify') && 
+				<ShopifyDisplay />
 			}
 		</div>
 	)

@@ -8,7 +8,7 @@ h1, h2, h3, h4, h5 {
 	margin: 0;
 }
 
-button {
+button, .button {
 	all: unset;
 	border: 1px solid $primary-color;
 	border-radius: 3px;
@@ -27,6 +27,11 @@ button {
 		color: darken($grey, 10%);
 		cursor: default;
 		pointer-events: none;
+	}
+
+	&+ button,
+	&+ .button {
+		margin-left: 18px;
 	}
 }
 
@@ -89,6 +94,7 @@ body {
 			padding: 4px;
 			border-radius: 3px;
 			user-select: none;
+			margin-bottom: 8px;
 
 			&.active {
 				background-color: $primary-color;

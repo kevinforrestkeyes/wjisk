@@ -46,3 +46,21 @@ export function updateDepopProducts() {
 			return res;
 		});
 }
+
+export function testShopifyEndpoint() {
+	const targetUrl = 'https://a45df053.ngrok.io/';
+	return fetch(proxyUrl+targetUrl)
+		.then((res) => res.json())
+		.then((res) => {
+			console.log(res);
+		});
+}
+
+export function getShopifyProducts() {
+	const targetUrl = 'https://a45df053.ngrok.io/get-auth-status';
+	return fetch(proxyUrl+targetUrl)
+		.then((res) => res.json())
+		.then((res) => {
+			console.log(res);
+		});
+}

@@ -12,6 +12,7 @@ export default function Sidebar({ activeModules, handleModuleChange }) {
 			<div className="module-content">
 				<ul>
 					<ControlOption activeModules={activeModules} name='depop' handleModuleChange={handleModuleChange}/>
+					<ControlOption activeModules={activeModules} name='shopify' handleModuleChange={handleModuleChange}/>
 				</ul>
 			</div>
 		</div>
