@@ -29,7 +29,10 @@ export default class DepopDisplay extends React.Component {
 			getDepopScrapeStatus()
 				.then((status) => {
 					const scrapeStatus = status.updateInProgress ? 'in-progress' : 'completed';
-					if (scrapeStatus !== this.state.scrapeStatus) this.updateScrapeStatus();
+					if (scrapeStatus !== this.state.scrapeStatus) {
+						this.updateScrapeStatus();
+						this.updateProducts();
+					}
 				});
 		}, 10000);
 	}
@@ -38,13 +41,16 @@ export default class DepopDisplay extends React.Component {
 		getDepopScrapeInfo()
 			.then((data) => {
 				const scrapeStatus = data.status.updateInProgress ? 'in-progress' : 'completed';
-				const lastScrapeIndex = Object.keys(data.log).find(index => {
-					const log = data.log[index];
-					if ((log.request === 'update-depop-products') && (log.runEndTime !== null)) {
-						return true;
-					}
-				});
-				const lastScrape = data.log[lastScrapeIndex].runEndTime;
+				let lastScrape = 'N/A';
+				if (data.log.length > 0) {
+					const lastScrapeIndex = Object.keys(data.log).find(index => {
+						const log = data.log[index];
+						if ((log.request === 'update-depop-products') && (log.runEndTime !== null)) {
+							return true;
+						}
+					});
+					lastScrape = lastScrapeIndex !== undefined ? data.log[lastScrapeIndex].runEndTime : 'N/A';
+				}
 				this.setState({
 					scrapeStatus,
 					lastScrape
