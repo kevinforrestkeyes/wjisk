@@ -22,11 +22,11 @@ export default class Body extends React.Component {
 	}
 
 	handleModuleChange(name) {
-		const activeModules = this.state.activeModules;
+		let activeModules = [...this.state.activeModules];
 		if (activeModules.includes(name)) {
 			activeModules.splice(activeModules.indexOf(name),1);
 		} else {
-			activeModules.push(name);
+			activeModules = [name];
 		}
 		this.setState({
 			activeModules
