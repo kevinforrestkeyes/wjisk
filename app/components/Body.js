@@ -12,11 +12,13 @@ export default class Body extends React.Component {
 			activeModules: [
 				'shopify'
 			],
-			depopProducts: []
+			depopProducts: [],
+			shopifyProducts: [],
 		};
 
 		this.handleModuleChange = this.handleModuleChange.bind(this);
 		this.handleDepopProductsUpdate = this.handleDepopProductsUpdate.bind(this);
+		this.handleShopifyProductsUpdate = this.handleShopifyProductsUpdate.bind(this);
 	}
 
 	handleModuleChange(name) {
@@ -37,6 +39,12 @@ export default class Body extends React.Component {
 		});
 	}
 
+	handleShopifyProductsUpdate(products) {
+		this.setState({
+			shopifyProducts: products
+		});
+	}
+
 	render() {
 		return (
 			<div className="body">
@@ -44,6 +52,8 @@ export default class Body extends React.Component {
 					activeModules={this.state.activeModules} 
 					handleDepopProductsUpdate={this.handleDepopProductsUpdate} 
 					depopProducts={this.state.depopProducts} 
+					handleShopifyProductsUpdate={this.handleShopifyProductsUpdate} 
+					shopifyProducts={this.state.shopifyProducts} 
 				/>
 				<Sidebar 
 					activeModules={this.state.activeModules} 
@@ -54,7 +64,7 @@ export default class Body extends React.Component {
 	}
 }
 
-function BodyContent({ activeModules, depopProducts, handleDepopProductsUpdate }) {
+function BodyContent({ activeModules, depopProducts, handleDepopProductsUpdate, handleShopifyProductsUpdate, shopifyProducts }) {
 	return (
 		<div className="body-content">
 			{ activeModules.includes('depop') && 
@@ -64,7 +74,10 @@ function BodyContent({ activeModules, depopProducts, handleDepopProductsUpdate }
 				/>
 			}
 			{ activeModules.includes('shopify') && 
-				<ShopifyDisplay />
+				<ShopifyDisplay 
+				handleShopifyProductsUpdate={handleShopifyProductsUpdate}
+				products={shopifyProducts}
+			/>
 			}
 		</div>
 	)
@@ -73,5 +86,7 @@ function BodyContent({ activeModules, depopProducts, handleDepopProductsUpdate }
 BodyContent.propTypes = {
 	activeModules: PropTypes.array.isRequired,
 	depopProducts: PropTypes.array.isRequired,
-	handleDepopProductsUpdate: PropTypes.func.isRequired
+	handleDepopProductsUpdate: PropTypes.func.isRequired,
+	shopifyProducts: PropTypes.array.isRequired,
+	handleShopifyProductsUpdate: PropTypes.func.isRequired
 }

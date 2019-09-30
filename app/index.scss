@@ -10,6 +10,8 @@ h1, h2, h3, h4, h5 {
 
 button, .button {
 	all: unset;
+	font-family: 'Roboto', sans-serif;
+	margin: 0;
 	border: 1px solid $primary-color;
 	border-radius: 3px;
 	padding: 2px 8px;
@@ -35,7 +37,7 @@ button, .button {
 	}
 }
 
-p, th, td, li, button {
+p, th, td, li {
 	font-family: 'Roboto', sans-serif;
 	margin: 0;
 }
@@ -127,7 +129,7 @@ body {
 		align-items: center;
 		height: 38px;
 
-		button {
+		button, .button {
 			justify-self: flex-end;
 			margin-left: auto;
 		}
@@ -170,7 +172,15 @@ body {
 
 		&.price,
 		&.size {
-			max-width: 64px;
+			max-width: 72px;
+		}
+
+		&.title {
+			min-width: 176px;
+
+			&+.blurb {
+				max-width: 176px;
+			}
 		}
 
 		&.images {
@@ -183,7 +193,7 @@ body {
 		padding-right: 28px;
 
 		p {
-			font-size: 14px;
+			font-size: 15px;
 			overflow: hidden;
 			display: -webkit-box;
 			-webkit-line-clamp: 2;

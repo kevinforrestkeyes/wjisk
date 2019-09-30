@@ -56,11 +56,16 @@ export function testShopifyEndpoint() {
 		});
 }
 
-export function getShopifyProducts() {
+export function getShopifyAuthStatus() {
 	const targetUrl = 'https://a45df053.ngrok.io/get-auth-status';
 	return fetch(proxyUrl+targetUrl)
 		.then((res) => res.json())
-		.then((res) => {
-			console.log(res);
-		});
+		.then((res) => res);
+}
+
+export function getShopifyProducts() {
+	const targetUrl = 'https://a45df053.ngrok.io/get-products';
+	return fetch(proxyUrl+targetUrl)
+		.then((res) => res.json())
+		.then((res) => res);
 }
