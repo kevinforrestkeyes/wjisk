@@ -48,7 +48,7 @@ export function updateDepopProducts() {
 }
 
 export function testShopifyEndpoint() {
-	const targetUrl = 'https://a45df053.ngrok.io/';
+	const targetUrl = 'https://anpoorte.herokuapp.com/';
 	return fetch(proxyUrl+targetUrl)
 		.then((res) => res.json())
 		.then((res) => {
@@ -57,14 +57,14 @@ export function testShopifyEndpoint() {
 }
 
 export function getShopifyAuthStatus() {
-	const targetUrl = 'https://a45df053.ngrok.io/get-auth-status';
+	const targetUrl = 'https://anpoorte.herokuapp.com/get-auth-status';
 	return fetch(proxyUrl+targetUrl)
 		.then((res) => res.json())
 		.then((res) => res);
 }
 
 export function getShopifyProducts() {
-	const targetUrl = 'https://a45df053.ngrok.io/get-products';
+	const targetUrl = 'https://anpoorte.herokuapp.com/get-products';
 	return fetch(proxyUrl+targetUrl)
 		.then((res) => res.json())
 		.then((res) => res);
