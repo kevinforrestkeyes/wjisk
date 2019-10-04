@@ -153,14 +153,14 @@ function LogView({ logContent }) {
 	const logSorted = logContent.sort((a, b) => {
 		return new Date(b.runStartTime) - new Date(a.runStartTime);
 	})
-	console.log(logSorted);
 	return (
 		<table className="log-table">
 			<thead>
 				<tr>
-					<th>id</th>
-					<th>run start time</th>
-					<th>run end time</th>
+					<th className="id">id</th>
+					<th className="start">run start time</th>
+					<th className="end">run end time</th>
+					<th className="expand">expand</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -174,12 +174,99 @@ LogView.propTypes = {
 	logContent: PropTypes.array.isRequired
 }
 
-function LogEntry({ logData }) {
-	return (
-		<tr>
-			<td>{ logData.id }</td>
-			<td>{ logData.runStartTime }</td>
-			<td>{ logData.runEndTime !== null ? logData.runEndTime : 'N/A' }</td>
-		</tr>
-	)
+class LogEntry extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			expanded: false
+		}
+
+		this.toggleExpand = this.toggleExpand.bind(this);
+	}
+
+	toggleExpand() {
+		const expanded = !this.state.expanded;
+		this.setState({
+			expanded
+		})
+	}
+
+	render() {
+		const { logData } = this.props;
+		return (
+			<>
+				<tr>
+					<td className="id">{ logData.id }</td>
+					<td className="start">{ logData.runStartTime }</td>
+					<td className="end">{ logData.runEndTime !== null ? logData.runEndTime : 'N/A' }</td>
+					<td className="expand">
+						<button onClick={this.toggleExpand} className="expand-collapse">
+							{ this.state.expanded 
+								? (
+									<svg 
+										xmlns="http://www.w3.org/2000/svg" 
+										width="18" 
+										height="18" 
+										viewBox="0 0 24 24" 
+										fill="none" 
+										stroke="#27ae60" 
+										strokeWidth="2" 
+										strokeLinecap="square" 
+										strokeLinejoin="arcs"
+									>
+											<line x1="5" y1="12" x2="19" y2="12"></line>
+									</svg>
+								)
+								: (
+									<svg 
+										xmlns="http://www.w3.org/2000/svg" 
+										width="18" 
+										height="18" 
+										viewBox="0 0 24 24" 
+										fill="none" 
+										stroke="#27ae60" 
+										strokeWidth="2" 
+										strokeLinecap="square" 
+										strokeLinejoin="arcs"
+									>
+										<line x1="12" y1="5" x2="12" y2="19"></line>
+										<line x1="5" y1="12" x2="19" y2="12"></line>
+									</svg>
+								)
+							}
+						</button>
+					</td>
+				</tr>
+				{ this.state.expanded && 
+					<tr className="log-details">
+						<td>
+							<table>
+								<thead>
+									<tr>
+										<th className="timestamp">entry time</th>
+										<th className="message">entry message</th>
+									</tr>
+								</thead>
+								<tbody>
+									{ logData.logContents.map((subEntry, index) => {
+										return (
+											<tr key={index}>
+												<td className="timestamp">{ subEntry.timestamp.split(', ')[1] }</td>
+												<td className="message">{ subEntry.entry }</td>
+											</tr>
+										)
+									})}
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				}
+			</>
+		)
+	}
+}
+
+LogEntry.propTypes = {
+	logData: PropTypes.object.isRequired
 }

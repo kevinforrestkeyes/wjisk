@@ -37,6 +37,21 @@ button, .button {
 	}
 }
 
+button.expand-collapse {
+	padding: 0;
+	display: block;
+
+	svg {
+		display: block;
+	}
+
+	&:active {
+		svg {
+			stroke: $white;
+		}
+	}
+}
+
 p, th, td, li {
 	font-family: 'Roboto', sans-serif;
 	margin: 0;
@@ -194,6 +209,21 @@ body {
 			max-width: 200px;
 			flex-wrap: wrap;
 		}
+
+		&.id {
+			flex: 2;
+			padding: 0;
+		}
+
+		&.start,
+		&.end {
+			flex: 3;
+			padding: 0;
+		}
+
+		&.expand {
+			padding: 0;
+		}
 	}
 
 	td {
@@ -224,6 +254,29 @@ body {
 				width: 100%;
 				height: 172px;
 				margin: 6px 6px 6px 0;
+			}
+		}
+	}
+
+	tr.log-details {
+		padding: 0 0 0 8%;
+
+		&>td {
+			padding: 0;
+		}
+
+		table {
+			display: inline-block;
+			width: 100%;
+
+			.timestamp {
+				flex: 1;
+				padding: 0;
+			}
+
+			.message {
+				flex: 4;
+				padding: 0;
 			}
 		}
 	}
