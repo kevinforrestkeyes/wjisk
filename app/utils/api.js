@@ -2,7 +2,7 @@ const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 export function getDepopProducts() {
 	// only temporary until this is live
-	const targetUrl = 'http://hidden-temple-17823.herokuapp.com/get-depop-products';
+	const targetUrl = 'http://denishoku.herokuapp.com/get-depop-products';
 	return fetch(proxyUrl+targetUrl)
 		.then((res) => res.json())
 		.then((products) => {
@@ -21,7 +21,7 @@ export function getDepopScrapeInfo() {
 }
 
 export function getDepopScrapeStatus() {
-	const targetUrl = 'http://hidden-temple-17823.herokuapp.com/scrape-status';
+	const targetUrl = 'http://denishoku.herokuapp.com/scrape-status';
 	return fetch(proxyUrl+targetUrl)
 		.then((res) => res.json())
 		.then((status) => {
@@ -30,7 +30,7 @@ export function getDepopScrapeStatus() {
 }
 
 function getDepopLogData() {
-	const targetUrl = 'http://hidden-temple-17823.herokuapp.com/get-log';
+	const targetUrl = 'http://denishoku.herokuapp.com/get-log';
 	return fetch(proxyUrl+targetUrl)
 		.then((res) => res.json())
 		.then((log) => {
@@ -39,7 +39,7 @@ function getDepopLogData() {
 }
 
 export function updateDepopProducts() {
-	const targetUrl = 'http://hidden-temple-17823.herokuapp.com/update-depop-products';
+	const targetUrl = 'http://denishoku.herokuapp.com/update-depop-products';
 	return fetch(proxyUrl+targetUrl)
 		.then((res) => res.json())
 		.then((res) => {
