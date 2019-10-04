@@ -79,10 +79,7 @@ export default class ShopifyDisplay extends React.Component {
 							}
 						</div>
 						<div className='module-content'>
-							{ tableProducts.length > 0
-								? <ProductTable products={tableProducts} />
-								: <p>loading products...</p>
-							}
+							<ProductTable products={tableProducts} />
 						</div>
 					</div>
 				</div>

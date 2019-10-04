@@ -10,7 +10,7 @@ export default class Body extends React.Component {
 
 		this.state = {
 			activeModules: [
-				'shopify'
+				'depop'
 			],
 			depopProducts: [],
 			shopifyProducts: [],

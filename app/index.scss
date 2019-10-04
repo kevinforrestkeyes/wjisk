@@ -129,10 +129,11 @@ body {
 		align-items: center;
 		height: 38px;
 
-		button, .button {
+		.button-container {
 			justify-self: flex-end;
 			margin-left: auto;
 		}
+
 
 		p {
 			margin-right: 24px;
@@ -155,7 +156,7 @@ body {
 }
 
 .product-table {
-	height: 600px;
+	height: 486px;
 	overflow-y: scroll;
 	display: block;
 
