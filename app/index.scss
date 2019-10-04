@@ -155,10 +155,16 @@ body {
 	}
 }
 
-.product-table {
+.product-table, 
+.log-table {
 	height: 486px;
 	overflow-y: scroll;
 	display: block;
+
+	thead, tbody {
+		width: 100%;
+    display: inline-block;
+	}
 
 	tr {
 		display: flex;

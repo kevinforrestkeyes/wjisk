@@ -12,9 +12,10 @@ export default class DepopDisplay extends React.Component {
 		super(props);
 
 		this.state = {
-			view: 'products',
+			view: 'log',
 			lastScrape: '',
-			scrapeStatus: ''
+			scrapeStatus: '',
+			logContent: []
 		}
 
 		this.updateProducts = this.updateProducts.bind(this);
@@ -60,7 +61,8 @@ export default class DepopDisplay extends React.Component {
 				}
 				this.setState({
 					scrapeStatus,
-					lastScrape
+					lastScrape,
+					logContent: data.log
 				})
 			});
 	}
@@ -94,7 +96,7 @@ export default class DepopDisplay extends React.Component {
 	}
 
 	render() {
-		const { scrapeStatus, lastScrape, view } = this.state;
+		const { scrapeStatus, lastScrape, view, logContent } = this.state;
 		const scrapeStatusLoaded = ((scrapeStatus.length > 0) && (lastScrape.length > 0));
 
 		return (
@@ -133,7 +135,7 @@ export default class DepopDisplay extends React.Component {
 							<ProductTable products={this.props.products} />
 						}
 						{ view === 'log' && 
-							<LogView />
+							<LogView logContent={logContent} />
 						}
 					</div>
 				</div>
@@ -148,7 +150,36 @@ DepopDisplay.propTypes = {
 }
 
 function LogView({ logContent }) {
+	const logSorted = logContent.sort((a, b) => {
+		return new Date(b.runStartTime) - new Date(a.runStartTime);
+	})
+	console.log(logSorted);
 	return (
-		<p>hi</p>
+		<table className="log-table">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>run start time</th>
+					<th>run end time</th>
+				</tr>
+			</thead>
+			<tbody>
+				{ logSorted.map(logEntry => <LogEntry key={logEntry.id} logData={logEntry} />) }
+			</tbody>
+		</table>
+	)
+}
+
+LogView.propTypes = {
+	logContent: PropTypes.array.isRequired
+}
+
+function LogEntry({ logData }) {
+	return (
+		<tr>
+			<td>{ logData.id }</td>
+			<td>{ logData.runStartTime }</td>
+			<td>{ logData.runEndTime !== null ? logData.runEndTime : 'N/A' }</td>
+		</tr>
 	)
 }
