@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function ProductTable({ products }) {
+export default function ProductTable({ products, handleProductSelect, toggleAllProductSelect }) {
 	const tableHeadings = products.length > 0 ? Object.keys(products[0]) : [];
+
 	return (
 		<div className="product-table-container">
 			{ products.length > 0
@@ -10,11 +11,35 @@ export default function ProductTable({ products }) {
 					<table className="product-table">
 						<thead>
 							<tr>
-								{ tableHeadings.map((heading, index) => <th key={index} className={heading}>{heading}</th>) }
+								{ tableHeadings.map((heading, index) => {
+									return (
+										<th key={index} className={heading}>
+											{ heading !== 'selected' 
+												? heading
+												: <input 
+														onChange={toggleAllProductSelect} 
+														type="checkbox" 
+														name="select" 
+														id="all-select"
+													/>
+											}
+										</th>
+									)
+									})
+								}
 							</tr>
 						</thead>
 						<tbody>
-							{ products.map((product, index) => <TableRow key={index} product={product} headings={tableHeadings} /> ) }
+							{ products.map((product, index) => {
+								return (
+									<TableRow 
+										key={index} 
+										product={product} 
+										headings={tableHeadings} 
+										handleProductSelect={() => handleProductSelect(index)} 
+									/> 
+								)})
+							}
 						</tbody>
 					</table>
 				)
@@ -25,19 +50,35 @@ export default function ProductTable({ products }) {
 }
 
 ProductTable.propTypes = {
-	products: PropTypes.array.isRequired
+	products: PropTypes.array.isRequired,
+	handleProductSelect: PropTypes.func,
+	toggleAllProductSelect: PropTypes.func
 }
 
-function TableRow({ headings, product }) {
+function TableRow({ headings, product, handleProductSelect }) {
 	return (
 		<tr>
 			{ headings.map((heading, index) => {
 				return (
 					<td key={index} className={heading}>
-						{ heading === 'images' 
-							? product.images.map((imageUrl, index) => <img key={index} src={imageUrl} />)
-							: <p>{ product[heading] }</p>
-						}
+						{(() => {
+							switch(heading) {
+								case 'images':
+									return product.images.map((imageUrl, index) => <img key={index} src={imageUrl} />);
+								case 'selected':
+									return (
+										<input 
+											onChange={handleProductSelect} 
+											type="checkbox" 
+											name="select" 
+											id={`${index}-select`}
+											checked={product.selected}
+										/>
+									);
+								default:
+									return <p>{ product[heading] }</p>;
+							}
+						})()}
 					</td>
 				)
 				})

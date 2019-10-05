@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProductTable from './ProductTable';
+import ProductHandler from './ProductHandler';
 import { 
 	getDepopProducts, 
 	getDepopScrapeInfo, 
@@ -12,16 +13,18 @@ export default class DepopDisplay extends React.Component {
 		super(props);
 
 		this.state = {
-			view: 'log',
+			view: 'products',
 			lastScrape: '',
 			scrapeStatus: '',
 			logContent: []
 		}
 
+		this.toggleViewMode = this.toggleViewMode.bind(this);
 		this.updateProducts = this.updateProducts.bind(this);
 		this.updateScrapeStatus = this.updateScrapeStatus.bind(this);
 		this.startNewDepopScrape = this.startNewDepopScrape.bind(this);
-		this.toggleViewMode = this.toggleViewMode.bind(this);
+		this.handleProductSelect = this.handleProductSelect.bind(this);
+		this.toggleAllProductSelect = this.toggleAllProductSelect.bind(this);
 	}
 
 	componentDidMount() {
@@ -79,12 +82,27 @@ export default class DepopDisplay extends React.Component {
 		});
 	}
 
+	toggleAllProductSelect(e) {
+		const products = [...this.props.products].map(product => {
+			product.selected = e.target.checked;
+			return product;
+		});
+		this.props.handleDepopProductsUpdate(products);
+	}
+
+	handleProductSelect(index) {
+		const products = [...this.props.products];
+		products[index].selected = !products[index].selected;
+		this.props.handleDepopProductsUpdate(products);
+	}
+
 	updateProducts() {
 		getDepopProducts()
 			.then((data) => {
 				const products = data.map(product => {
 					const { blurb, images, size, price } = product;
 					return {
+						selected: false,
 						blurb,
 						size,
 						images,
@@ -132,10 +150,17 @@ export default class DepopDisplay extends React.Component {
 					</div>
 					<div className="module-content">
 						{ view === 'products' && 
-							<ProductTable products={this.props.products} />
+							<ProductTable 
+								products={this.props.products} 
+								handleProductSelect={this.handleProductSelect}
+								toggleAllProductSelect={this.toggleAllProductSelect}
+							/>
 						}
 						{ view === 'log' && 
 							<LogView logContent={logContent} />
+						}
+						{ view === 'edit' &&
+							<ProductHandler products={this.props.products.filter(products => products.selected)} />
 						}
 					</div>
 				</div>
