@@ -1,13 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { checkIfAllProductsSelected } from '../utils/helpers';
 
 export default function ProductTable({ products, handleProductSelect, toggleAllProductSelect }) {
 	const tableHeadings = products.length > 0 ? Object.keys(products[0]) : [];
-
-	function checkIfAllProductsSelected(products) {
-		const allSelected = products.find(product => !product.selected) === undefined;
-		return allSelected;
-	}
 
 	return (
 		<div className="product-table-container">

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProductTable from './ProductTable';
 import ProductHandler from './ProductHandler';
+import { checkIfAnyProductsSelected } from '../utils/helpers';
 import { 
 	getDepopProducts, 
 	getDepopScrapeInfo, 
@@ -32,7 +33,7 @@ export default class DepopDisplay extends React.Component {
 			this.updateProducts();
 		}
 		this.updateScrapeStatus();
-		setInterval(() => {
+		this.timerID = setInterval(() => {
 			getDepopScrapeStatus()
 				.then((status) => {
 					const scrapeStatus = status.updateInProgress ? 'in-progress' : 'completed';
@@ -42,6 +43,10 @@ export default class DepopDisplay extends React.Component {
 					}
 				});
 		}, 10000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.timerID);
 	}
 
 	updateScrapeStatus() {
@@ -156,6 +161,7 @@ export default class DepopDisplay extends React.Component {
 									view={this.state.view} 
 									updateProducts={this.updateProducts} 
 									toggleViewMode={this.toggleViewMode}
+									enableEdit={checkIfAnyProductsSelected(this.props.products)}
 								/>
 								<ProductTable 
 									products={this.props.products} 
@@ -188,12 +194,12 @@ DepopDisplay.propTypes = {
 	products: PropTypes.array.isRequired
 }
 
-function TableControls({ view, toggleViewMode, updateProducts }) {
+function TableControls({ view, toggleViewMode, updateProducts, enableEdit }) {
 	return (
 		<div className="table-controls">
 			{ view === 'products' && 
 				<>
-					<button onClick={() => toggleViewMode('edit')}>add selected products to shopify</button>
+					<button disabled={!enableEdit} onClick={() => toggleViewMode('edit')}>add selected products to shopify</button>
 					<button onClick={updateProducts}>reload products</button>
 				</>
 			}
@@ -207,7 +213,8 @@ function TableControls({ view, toggleViewMode, updateProducts }) {
 TableControls.propTypes = {
 	view: PropTypes.string.isRequired,
 	toggleViewMode: PropTypes.func.isRequired,
-	updateDepopProducts: PropTypes.func
+	updateDepopProducts: PropTypes.func,
+	enableEdit: PropTypes.bool
 }
 
 function LogView({ logContent }) {
