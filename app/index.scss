@@ -170,9 +170,16 @@ body {
 	}
 }
 
+.table-controls {
+	display: flex;
+	padding: 0 0 8px;
+	align-items: center;
+	height: 22px;
+}
+
 .product-table, 
 .log-table {
-	height: 486px;
+	height: 464px;
 	overflow-y: scroll;
 	display: block;
 

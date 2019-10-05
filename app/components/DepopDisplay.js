@@ -75,10 +75,9 @@ export default class DepopDisplay extends React.Component {
 			.then(() => this.updateScrapeStatus());
 	}
 
-	toggleViewMode() {
-		const view = this.state.view === 'products' ? 'log' : 'products';
+	toggleViewMode(newView) {
 		this.setState({
-			view
+			view: newView
 		});
 	}
 
@@ -129,8 +128,10 @@ export default class DepopDisplay extends React.Component {
 								<p>scrape status: <span className={scrapeStatus}>{scrapeStatus}</span></p>
 								<p>last scrape: {lastScrape}</p>
 								<div className="button-container">
-									<button onClick={this.toggleViewMode}>
-										{ view === 'products' 
+									<button 
+										onClick={() => this.toggleViewMode(view === 'log' ? 'products' : 'log')}
+									>
+										{ view !== 'log' 
 											? 'show'
 											: 'hide'
 										} log
@@ -150,17 +151,30 @@ export default class DepopDisplay extends React.Component {
 					</div>
 					<div className="module-content">
 						{ view === 'products' && 
-							<ProductTable 
-								products={this.props.products} 
-								handleProductSelect={this.handleProductSelect}
-								toggleAllProductSelect={this.toggleAllProductSelect}
-							/>
+							<>
+								<TableControls 
+									view={this.state.view} 
+									updateProducts={this.updateProducts} 
+									toggleViewMode={this.toggleViewMode}
+								/>
+								<ProductTable 
+									products={this.props.products} 
+									handleProductSelect={this.handleProductSelect}
+									toggleAllProductSelect={this.toggleAllProductSelect}
+								/>
+							</>
 						}
 						{ view === 'log' && 
 							<LogView logContent={logContent} />
 						}
 						{ view === 'edit' &&
-							<ProductHandler products={this.props.products.filter(products => products.selected)} />
+							<>
+								<TableControls 
+									view={this.state.view} 
+									toggleViewMode={this.toggleViewMode}
+								/>
+								<ProductHandler products={this.props.products.filter(products => products.selected)} />
+							</>
 						}
 					</div>
 				</div>
@@ -172,6 +186,22 @@ export default class DepopDisplay extends React.Component {
 DepopDisplay.propTypes = {
 	handleDepopProductsUpdate: PropTypes.func.isRequired,
 	products: PropTypes.array.isRequired
+}
+
+function TableControls({ view, toggleViewMode, updateProducts }) {
+	return (
+		<div className="table-controls">
+			{ view === 'products' && 
+				<>
+					<button onClick={() => toggleViewMode('edit')}>add selected products to shopify</button>
+					<button onClick={updateProducts}>reload products</button>
+				</>
+			}
+			{ view === 'edit' && 
+				<button onClick={() => toggleViewMode('products')}>cancel</button>
+			}
+		</div>
+	)
 }
 
 function LogView({ logContent }) {

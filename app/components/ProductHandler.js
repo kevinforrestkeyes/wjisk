@@ -9,6 +9,7 @@ export default class ProductHandler extends React.Component {
 	}
 
 	render() {
+		console.log(this.props.products);
 		return (
 			<div className="product-handler">
 				<h1>product handler</h1>
