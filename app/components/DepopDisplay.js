@@ -204,6 +204,12 @@ function TableControls({ view, toggleViewMode, updateProducts }) {
 	)
 }
 
+TableControls.propTypes = {
+	view: PropTypes.string.isRequired,
+	toggleViewMode: PropTypes.func.isRequired,
+	updateDepopProducts: PropTypes.func
+}
+
 function LogView({ logContent }) {
 	const logSorted = logContent.sort((a, b) => {
 		return new Date(b.runStartTime) - new Date(a.runStartTime);

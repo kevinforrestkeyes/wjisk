@@ -17,3 +17,7 @@ export default class ProductHandler extends React.Component {
 		)
 	}
 }
+
+ProductHandler.propTypes = {
+	products: PropTypes.array.isRequired
+}
