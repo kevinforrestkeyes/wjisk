@@ -14,7 +14,7 @@ export default class DepopDisplay extends React.Component {
 		super(props);
 
 		this.state = {
-			view: 'products',
+			view: 'edit',
 			lastScrape: '',
 			scrapeStatus: '',
 			logContent: []
@@ -106,7 +106,7 @@ export default class DepopDisplay extends React.Component {
 				const products = data.map(product => {
 					const { blurb, images, size, price } = product;
 					return {
-						selected: false,
+						selected: true,
 						blurb,
 						size,
 						images,
@@ -173,7 +173,7 @@ export default class DepopDisplay extends React.Component {
 						{ view === 'log' && 
 							<LogView logContent={logContent} />
 						}
-						{ view === 'edit' &&
+						{ view === 'edit' && this.props.products.length > 0 &&
 							<>
 								<TableControls 
 									view={this.state.view} 

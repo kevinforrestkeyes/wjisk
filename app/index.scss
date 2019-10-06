@@ -29,6 +29,10 @@ button, .button {
 		color: darken($grey, 10%);
 		cursor: default;
 		pointer-events: none;
+
+		svg {
+			stroke: darken($grey, 10%);
+		}
 	}
 
 	&+ button,
@@ -37,7 +41,8 @@ button, .button {
 	}
 }
 
-button.expand-collapse {
+button.expand-collapse,
+button.page-control {
 	padding: 0;
 	display: block;
 
@@ -52,8 +57,19 @@ button.expand-collapse {
 	}
 }
 
-p, th, td, li {
+input, textarea {
+	all: unset;
+	width: 200px;
+	background-color: $white;
+	border: 1px solid darken($grey, 20%);
+	margin-right: 18px;
+	border-radius: 4px;
+	padding: 4px;
+}
+
+p, th, td, li, label, input, textarea {
 	font-family: 'Roboto', sans-serif;
+	color: #222;
 	margin: 0;
 }
 
@@ -300,6 +316,62 @@ body {
 			.message {
 				flex: 4;
 				padding: 0;
+			}
+		}
+	}
+}
+
+.product-handler {
+	.handler-controls {
+		display: flex;
+		margin: 8px 0 12px;
+
+		&>*:not(first-child) {
+			margin-right: 12px;
+		}
+	}
+
+	.handler-content {
+		.product-editor {
+			display: flex;
+
+			.images {
+				flex: 1;
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				margin-right: 18px;
+			
+				img {
+					width: 48%;
+					margin-bottom: 4%;
+					border-radius: 8px;
+				}
+			}
+
+			.data {
+				flex: 2;
+				display: flex;
+				height: 280px;
+
+				.column {
+					display: flex;
+					flex-direction: column;
+					align-items: flex-start;
+					flex-wrap: wrap;
+
+					&:not(last-child) {
+						margin-right: 18px;
+					}
+				}
+
+				input, textarea {
+					margin: 8px 0 16px;
+				}
+
+				textarea {
+					flex: 1;
+				}
 			}
 		}
 	}
