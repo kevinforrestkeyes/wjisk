@@ -57,7 +57,7 @@ button.page-control {
 	}
 }
 
-input, textarea {
+input[type="text"], textarea {
 	all: unset;
 	width: 200px;
 	background-color: $white;
@@ -67,7 +67,7 @@ input, textarea {
 	padding: 4px;
 }
 
-p, th, td, li, label, input, textarea {
+p, th, td, li, label, input[type="text"], textarea {
 	font-family: 'Roboto', sans-serif;
 	color: #222;
 	margin: 0;
