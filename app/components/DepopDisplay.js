@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProductTable from './ProductTable';
 import ProductHandler from './ProductHandler';
+import { Plus, Minus } from './Icons';
 import { checkIfAnyProductsSelected } from '../utils/helpers';
 import { 
 	getDepopProducts, 
@@ -276,37 +277,8 @@ class LogEntry extends React.Component {
 					<td className="expand">
 						<button onClick={this.toggleExpand} className="expand-collapse">
 							{ this.state.expanded 
-								? (
-									<svg 
-										xmlns="http://www.w3.org/2000/svg" 
-										width="18" 
-										height="18" 
-										viewBox="0 0 24 24" 
-										fill="none" 
-										stroke="#27ae60" 
-										strokeWidth="2" 
-										strokeLinecap="square" 
-										strokeLinejoin="arcs"
-									>
-											<line x1="5" y1="12" x2="19" y2="12"></line>
-									</svg>
-								)
-								: (
-									<svg 
-										xmlns="http://www.w3.org/2000/svg" 
-										width="18" 
-										height="18" 
-										viewBox="0 0 24 24" 
-										fill="none" 
-										stroke="#27ae60" 
-										strokeWidth="2" 
-										strokeLinecap="square" 
-										strokeLinejoin="arcs"
-									>
-										<line x1="12" y1="5" x2="12" y2="19"></line>
-										<line x1="5" y1="12" x2="19" y2="12"></line>
-									</svg>
-								)
+								? <Minus />
+								: <Plus />
 							}
 						</button>
 					</td>

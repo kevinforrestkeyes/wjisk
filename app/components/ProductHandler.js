@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProductTable from './ProductTable';
+import { ArrowPrevious, ArrowNext } from './Icons';
 
 export default class ProductHandler extends React.Component {
 	constructor(props) {
@@ -66,35 +67,11 @@ export default class ProductHandler extends React.Component {
 						<>
 							<button onClick={this.toggleMode}>submit all to shopify</button>
 							<button onClick={() => this.updateActiveIndex(activeIndex - 1)} className="page-control">
-								<svg 
-									xmlns="http://www.w3.org/2000/svg" 
-									width="16" 
-									height="16" 
-									viewBox="0 0 24 24" 
-									fill="none" 
-									stroke="#27ae60" 
-									strokeWidth="2" 
-									strokeLinecap="round" 
-									strokeLinejoin="round"
-								>
-										<path d="M19 12H6M12 5l-7 7 7 7"/>
-								</svg>
+								<ArrowPrevious />
 							</button>
 							<p>{`product ${activeIndex+1} of ${productCount}`}</p>
 							<button onClick={() => this.updateActiveIndex(activeIndex + 1)} className="page-control">
-								<svg 
-									xmlns="http://www.w3.org/2000/svg" 
-									width="16" 
-									height="16" 
-									viewBox="0 0 24 24" 
-									fill="none" 
-									stroke="#27ae60" 
-									strokeWidth="2" 
-									strokeLinecap="round" 
-									strokeLinejoin="round"
-								>
-										<path d="M5 12h13M12 5l7 7-7 7"/>
-								</svg>
+								<ArrowNext />
 							</button>
 						</>
 					}
