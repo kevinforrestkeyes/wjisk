@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import DepopDisplay from './DepopDisplay';
 import ShopifyDisplay from './ShopifyDisplay';
 import Sidebar from './Sidebar';
+import { addProductsToShopify } from '../utils/api';
 
 export default class Body extends React.Component {
 	constructor(props) {
@@ -35,7 +36,7 @@ export default class Body extends React.Component {
 	}
 
 	addProductsToShopify(products) {
-		console.log(products);
+		addProductsToShopify(products[0]);
 	}
 
 	handleDepopProductsUpdate(products) {
