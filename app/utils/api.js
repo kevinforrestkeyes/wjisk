@@ -1,7 +1,7 @@
+// only temporary until this is live
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 export function getDepopProducts() {
-	// only temporary until this is live
 	const targetUrl = 'http://denishoku.herokuapp.com/get-depop-products';
 	return fetch(proxyUrl+targetUrl)
 		.then((res) => res.json())

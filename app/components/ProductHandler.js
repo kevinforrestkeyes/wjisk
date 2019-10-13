@@ -56,6 +56,7 @@ export default class ProductHandler extends React.Component {
 
 	render() {
 		const { activeIndex, productsForShopify, mode } = this.state;
+		const { addProductsToShopify } = this.props;
 		const productCount = productsForShopify.length;
 		
 		return (
@@ -100,7 +101,7 @@ export default class ProductHandler extends React.Component {
 					{ mode === 'confirm' && 
 						<>
 							<button onClick={this.toggleMode}>back to edit</button>
-							<button onClick={() => console.log('almost')}>{`add all ${productsForShopify.length} products to shopify`}</button>
+							<button onClick={() => addProductsToShopify(productsForShopify)}>{`add all ${productsForShopify.length} products to shopify`}</button>
 						</>
 					}
 				</div>
@@ -121,7 +122,8 @@ export default class ProductHandler extends React.Component {
 }
 
 ProductHandler.propTypes = {
-	products: PropTypes.array.isRequired
+	products: PropTypes.array.isRequired,
+	addProductsToShopify: PropTypes.func.isRequired
 }
 
 function ProductEditor({ product, updateProductForShopify }) {

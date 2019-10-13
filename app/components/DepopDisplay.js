@@ -119,6 +119,7 @@ export default class DepopDisplay extends React.Component {
 
 	render() {
 		const { scrapeStatus, lastScrape, view, logContent } = this.state;
+		const { products, addProductsToShopify } = this.props;
 		const scrapeStatusLoaded = ((scrapeStatus.length > 0) && (lastScrape.length > 0));
 
 		return (
@@ -158,13 +159,13 @@ export default class DepopDisplay extends React.Component {
 						{ view === 'products' && 
 							<>
 								<TableControls 
-									view={this.state.view} 
+									view={view} 
 									updateProducts={this.updateProducts} 
 									toggleViewMode={this.toggleViewMode}
-									enableEdit={checkIfAnyProductsSelected(this.props.products)}
+									enableEdit={checkIfAnyProductsSelected(products)}
 								/>
 								<ProductTable 
-									products={this.props.products} 
+									products={products} 
 									handleProductSelect={this.handleProductSelect}
 									toggleAllProductSelect={this.toggleAllProductSelect}
 								/>
@@ -173,13 +174,16 @@ export default class DepopDisplay extends React.Component {
 						{ view === 'log' && 
 							<LogView logContent={logContent} />
 						}
-						{ view === 'edit' && this.props.products.length > 0 &&
+						{ view === 'edit' && products.length > 0 &&
 							<>
 								<TableControls 
-									view={this.state.view} 
+									view={view} 
 									toggleViewMode={this.toggleViewMode}
 								/>
-								<ProductHandler products={this.props.products.filter(products => products.selected)} />
+								<ProductHandler 
+									products={products.filter(products => products.selected)} 
+									addProductsToShopify={addProductsToShopify}
+								/>
 							</>
 						}
 					</div>
@@ -191,6 +195,7 @@ export default class DepopDisplay extends React.Component {
 
 DepopDisplay.propTypes = {
 	handleDepopProductsUpdate: PropTypes.func.isRequired,
+	addProductsToShopify: PropTypes.func.isRequired,
 	products: PropTypes.array.isRequired
 }
 

@@ -19,6 +19,7 @@ export default class Body extends React.Component {
 		this.handleModuleChange = this.handleModuleChange.bind(this);
 		this.handleDepopProductsUpdate = this.handleDepopProductsUpdate.bind(this);
 		this.handleShopifyProductsUpdate = this.handleShopifyProductsUpdate.bind(this);
+		this.addProductsToShopify = this.addProductsToShopify.bind(this);
 	}
 
 	handleModuleChange(name) {
@@ -31,6 +32,10 @@ export default class Body extends React.Component {
 		this.setState({
 			activeModules
 		})
+	}
+
+	addProductsToShopify(products) {
+		console.log(products);
 	}
 
 	handleDepopProductsUpdate(products) {
@@ -53,7 +58,8 @@ export default class Body extends React.Component {
 					handleDepopProductsUpdate={this.handleDepopProductsUpdate} 
 					depopProducts={this.state.depopProducts} 
 					handleShopifyProductsUpdate={this.handleShopifyProductsUpdate} 
-					shopifyProducts={this.state.shopifyProducts} 
+					shopifyProducts={this.state.shopifyProducts}
+					addProductsToShopify={this.addProductsToShopify}
 				/>
 				<Sidebar 
 					activeModules={this.state.activeModules} 
@@ -64,20 +70,21 @@ export default class Body extends React.Component {
 	}
 }
 
-function BodyContent({ activeModules, depopProducts, handleDepopProductsUpdate, handleShopifyProductsUpdate, shopifyProducts }) {
+function BodyContent({ activeModules, depopProducts, handleDepopProductsUpdate, handleShopifyProductsUpdate, shopifyProducts, addProductsToShopify }) {
 	return (
 		<div className="body-content">
 			{ activeModules.includes('depop') && 
 				<DepopDisplay 
 					handleDepopProductsUpdate={handleDepopProductsUpdate} 
 					products={depopProducts} 
+					addProductsToShopify={addProductsToShopify}
 				/>
 			}
 			{ activeModules.includes('shopify') && 
 				<ShopifyDisplay 
-				handleShopifyProductsUpdate={handleShopifyProductsUpdate}
-				products={shopifyProducts}
-			/>
+					handleShopifyProductsUpdate={handleShopifyProductsUpdate}
+					products={shopifyProducts}
+				/>
 			}
 		</div>
 	)
@@ -88,5 +95,6 @@ BodyContent.propTypes = {
 	depopProducts: PropTypes.array.isRequired,
 	handleDepopProductsUpdate: PropTypes.func.isRequired,
 	shopifyProducts: PropTypes.array.isRequired,
-	handleShopifyProductsUpdate: PropTypes.func.isRequired
+	handleShopifyProductsUpdate: PropTypes.func.isRequired,
+	addProductsToShopify: PropTypes.func.isRequired
 }
