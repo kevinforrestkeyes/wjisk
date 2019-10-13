@@ -137,7 +137,7 @@ function ProductEditor({ product, updateProductForShopify }) {
 						type="text" 
 						name="price" 
 						onChange={updateProductForShopify} 
-						value={price} 
+						value={price !== null ? price : ''} 
 						placeholder="price"
 					/>
 					<label htmlFor="size">size</label>
@@ -145,7 +145,7 @@ function ProductEditor({ product, updateProductForShopify }) {
 						type="text" 
 						name="size" 
 						onChange={updateProductForShopify} 
-						value={size} 
+						value={size !== null ? size : ''} 
 						placeholder="size"
 					/>
 					<label htmlFor="tags">tags</label>
