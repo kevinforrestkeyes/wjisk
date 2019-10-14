@@ -75,8 +75,6 @@ export function getShopifyProducts() {
 
 export function addProductsToShopify(product) {
 	const targetUrl = `${anpoorteUrl}/add-new-product`;
-	console.log(product);
-	console.log(JSON.stringify(product));
 	return fetch(proxyUrl+targetUrl, {
 		headers: {
       'Content-Type': 'application/json'
@@ -84,5 +82,5 @@ export function addProductsToShopify(product) {
 		method: 'POST',
 		body: JSON.stringify(product)
 	})
-	.then((res) => console.log(res));
+	.then((res) => res);
 }

@@ -36,7 +36,7 @@ export default class Body extends React.Component {
 	}
 
 	addProductsToShopify(products) {
-		addProductsToShopify(products[0]);
+		products.forEach(product => addProductsToShopify(product));
 	}
 
 	handleDepopProductsUpdate(products) {

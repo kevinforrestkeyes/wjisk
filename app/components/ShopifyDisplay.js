@@ -1,8 +1,7 @@
 import React from 'react';
 import ProductTable from './ProductTable';
 import { 
-	getShopifyProducts, 
-	testShopifyEndpoint, 
+	getShopifyProducts,
 	getShopifyAuthStatus } from '../utils/api';
 
 export default class ShopifyDisplay extends React.Component {

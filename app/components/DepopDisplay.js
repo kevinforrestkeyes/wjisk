@@ -27,6 +27,7 @@ export default class DepopDisplay extends React.Component {
 		this.startNewDepopScrape = this.startNewDepopScrape.bind(this);
 		this.handleProductSelect = this.handleProductSelect.bind(this);
 		this.toggleAllProductSelect = this.toggleAllProductSelect.bind(this);
+		this.handleAddProductsToShopify = this.handleAddProductsToShopify.bind(this);
 	}
 
 	componentDidMount() {
@@ -95,6 +96,14 @@ export default class DepopDisplay extends React.Component {
 		this.props.handleDepopProductsUpdate(products);
 	}
 
+	handleAddProductsToShopify(products) {
+		this.props.addProductsToShopify(products);
+		alert(`added ${products.length} products to shopify`);
+		this.setState({
+			view: 'products'
+		});
+	}
+
 	handleProductSelect(index) {
 		const products = [...this.props.products];
 		products[index].selected = !products[index].selected;
@@ -120,7 +129,7 @@ export default class DepopDisplay extends React.Component {
 
 	render() {
 		const { scrapeStatus, lastScrape, view, logContent } = this.state;
-		const { products, addProductsToShopify } = this.props;
+		const { products } = this.props;
 		const scrapeStatusLoaded = ((scrapeStatus.length > 0) && (lastScrape.length > 0));
 
 		return (
@@ -183,7 +192,7 @@ export default class DepopDisplay extends React.Component {
 								/>
 								<ProductHandler 
 									products={products.filter(products => products.selected)} 
-									addProductsToShopify={addProductsToShopify}
+									addProductsToShopify={this.handleAddProductsToShopify}
 								/>
 							</>
 						}
