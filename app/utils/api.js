@@ -1,7 +1,6 @@
 // only temporary until this is live
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-// const anpoorteUrl = 'https://anpoorte.herokuapp.com'
-const anpoorteUrl = 'https://f420deb1.ngrok.io'
+const anpoorteUrl = 'https://anpoorte.herokuapp.com';
 const denishokuUrl = 'http://denishoku.herokuapp.com';
 
 export function getDepopProducts() {

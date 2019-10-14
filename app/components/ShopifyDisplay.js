@@ -69,7 +69,7 @@ export default class ShopifyDisplay extends React.Component {
 							{ !this.state.authorized 
 							? <a 
 									className='button' 
-									href='https://f420deb1.ngrok.io/shopify?shop=poorbaby-fashion.myshopify.com'>
+									href='https://anpoorte.herokuapp.com/shopify?shop=poorbaby-fashion.myshopify.com'>
 										authorize
 								</a>
 							: <>
