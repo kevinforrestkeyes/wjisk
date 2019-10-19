@@ -65,23 +65,54 @@ export default class ShopifyDisplay extends React.Component {
 						<div className='module-heading'>
 							<h3>shopify</h3>
 						</div>
-						<div className="module-status">
 							{ !this.state.authorized 
-							? <a 
-									className='button' 
-									href='https://anpoorte.herokuapp.com/shopify?shop=poorbaby-fashion.myshopify.com'>
-										authorize
-								</a>
-							: <>
-									<button onClick={this.loadProducts}>reload products</button>
-								</>
+								? <AuthorizeMenu />
+								: <Content loadProducts={this.loadProducts} tableProducts={tableProducts} />
 							}
-						</div>
-						<div className='module-content'>
-							<ProductTable products={tableProducts} />
-						</div>
 					</div>
 				</div>
 		)
 	}
+}
+
+class AuthorizeMenu extends React.Component {
+	state = {
+		shopName: ''
+	}
+
+	handleShopNameChange = (e) => {
+		this.setState({
+			shopName: e.target.value
+		})
+	}
+
+	render() {
+		const { shopName } = this.state;
+		return (
+			<div className="authorize-menu">
+				<div className="module-status">
+					<input onChange={this.handleShopNameChange} placeholder="enter shop name" type="text"/>
+					<a 
+						className={`button ${shopName.length === 0 ? 'disabled' : ''}`}
+						disabled={shopName.length === 0 ? 'true' : 'false'}
+						href={`https://d13bda85.ngrok.io/shopify?shop=${shopName}.myshopify.com`}>
+							authorize
+					</a>
+				</div>
+			</div>
+		)
+	}
+}
+
+function Content({ loadProducts, tableProducts }) {
+	return (
+		<>
+			<div className="module-status">
+				<button onClick={loadProducts}>reload products</button>
+			</div>
+			<div className='module-content'>
+				<ProductTable products={tableProducts} />
+			</div>
+		</>
+	)
 }
