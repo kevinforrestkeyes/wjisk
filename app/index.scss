@@ -24,7 +24,8 @@ button, .button {
 		background-color: $primary-color;
 	}
 
-	&:disabled {
+	&:disabled,
+	&.disabled {
 		border: 1px solid darken($grey, 10%);
 		color: darken($grey, 10%);
 		cursor: default;
@@ -35,8 +36,7 @@ button, .button {
 		}
 	}
 
-	&+ button,
-	&+ .button {
+	&:not(:first-child) {
 		margin-left: 18px;
 	}
 }
@@ -65,6 +65,14 @@ input[type="text"], textarea {
 	margin-right: 18px;
 	border-radius: 4px;
 	padding: 4px;
+}
+
+.module-status {
+	input {
+		background-color: lighten($white, 20%);
+		font-size: 14px;
+		padding: 2px 8px;
+	}
 }
 
 p, th, td, li, label, input[type="text"], textarea {
@@ -128,6 +136,10 @@ body {
 			border-radius: 3px;
 			user-select: none;
 			margin-bottom: 8px;
+
+			a {
+				all: unset;
+			}
 
 			&.active {
 				background-color: $primary-color;

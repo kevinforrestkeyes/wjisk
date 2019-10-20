@@ -1,5 +1,7 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import DepopDisplay from './DepopDisplay';
 import ShopifyDisplay from './ShopifyDisplay';
 import Sidebar from './Sidebar';
@@ -10,29 +12,18 @@ export default class Body extends React.Component {
 		super(props);
 
 		this.state = {
-			activeModules: [
-				'shopify'
-			],
 			depopProducts: [],
 			shopifyProducts: [],
 		};
 
-		this.handleModuleChange = this.handleModuleChange.bind(this);
 		this.handleDepopProductsUpdate = this.handleDepopProductsUpdate.bind(this);
 		this.handleShopifyProductsUpdate = this.handleShopifyProductsUpdate.bind(this);
 		this.addProductsToShopify = this.addProductsToShopify.bind(this);
 	}
 
-	handleModuleChange(name) {
-		let activeModules = [...this.state.activeModules];
-		if (activeModules.includes(name)) {
-			activeModules.splice(activeModules.indexOf(name),1);
-		} else {
-			activeModules = [name];
-		}
-		this.setState({
-			activeModules
-		})
+	componentDidMount() {
+		console.log(queryString.parse(window.location.href));
+		// console.log(shopifyClientToken);
 	}
 
 	addProductsToShopify(products) {
@@ -53,46 +44,57 @@ export default class Body extends React.Component {
 
 	render() {
 		return (
-			<div className="body">
-				<BodyContent 
-					activeModules={this.state.activeModules} 
-					handleDepopProductsUpdate={this.handleDepopProductsUpdate} 
-					depopProducts={this.state.depopProducts} 
-					handleShopifyProductsUpdate={this.handleShopifyProductsUpdate} 
-					shopifyProducts={this.state.shopifyProducts}
-					addProductsToShopify={this.addProductsToShopify}
-				/>
-				<Sidebar 
-					activeModules={this.state.activeModules} 
-					handleModuleChange={this.handleModuleChange} 
-				/>
-			</div>
+			<Router>
+				<div className="body">
+					<BodyContent 
+						handleDepopProductsUpdate={this.handleDepopProductsUpdate} 
+						depopProducts={this.state.depopProducts} 
+						handleShopifyProductsUpdate={this.handleShopifyProductsUpdate} 
+						shopifyProducts={this.state.shopifyProducts}
+						addProductsToShopify={this.addProductsToShopify}
+					/>
+					<Route path='/' component={Sidebar} />
+				</div>
+			</Router>
 		);
 	}
 }
 
-function BodyContent({ activeModules, depopProducts, handleDepopProductsUpdate, handleShopifyProductsUpdate, shopifyProducts, addProductsToShopify }) {
+function BodyContent({ depopProducts, handleDepopProductsUpdate, handleShopifyProductsUpdate, shopifyProducts, addProductsToShopify }) {
+	const depopProps = {
+		handleDepopProductsUpdate,
+		products: depopProducts,
+		addProductsToShopify
+	};
+	const shopifyProps = {
+		handleShopifyProductsUpdate,
+		products: shopifyProducts
+	};
 	return (
 		<div className="body-content">
-			{ activeModules.includes('depop') && 
-				<DepopDisplay 
-					handleDepopProductsUpdate={handleDepopProductsUpdate} 
-					products={depopProducts} 
-					addProductsToShopify={addProductsToShopify}
-				/>
-			}
-			{ activeModules.includes('shopify') && 
-				<ShopifyDisplay 
-					handleShopifyProductsUpdate={handleShopifyProductsUpdate}
-					products={shopifyProducts}
-				/>
-			}
+			<Route path='/' component={null} />
+			<Route path='/depop' render={(props) => {
+				return (
+					<DepopDisplay {...props}
+						handleDepopProductsUpdate={handleDepopProductsUpdate}
+						products={depopProducts}
+						addProductsToShopify={addProductsToShopify} 
+					/>
+				)
+			}}/>
+			<Route path='/shopify' render={(props) => {
+				return (
+					<ShopifyDisplay {...props}
+						handleShopifyProductsUpdate={handleShopifyProductsUpdate}
+						products={shopifyProducts}
+					/>
+				)
+			}}/>
 		</div>
 	)
 }
 
 BodyContent.propTypes = {
-	activeModules: PropTypes.array.isRequired,
 	depopProducts: PropTypes.array.isRequired,
 	handleDepopProductsUpdate: PropTypes.func.isRequired,
 	shopifyProducts: PropTypes.array.isRequired,

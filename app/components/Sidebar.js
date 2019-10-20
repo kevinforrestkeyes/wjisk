@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
+import { Link } from 'react-router-dom';
 
-export default function Sidebar({ activeModules, handleModuleChange }) {
+export default function Sidebar({ location }) {
 	return (
 		<div className="sidebar module">
 			<div className="module-inner">
@@ -11,30 +13,24 @@ export default function Sidebar({ activeModules, handleModuleChange }) {
 			</div>
 			<div className="module-content">
 				<ul>
-					<ControlOption activeModules={activeModules} name='depop' handleModuleChange={handleModuleChange}/>
-					<ControlOption activeModules={activeModules} name='shopify' handleModuleChange={handleModuleChange}/>
+					<ControlOption location={location} name='depop'/>
+					<ControlOption location={location} name='shopify'/>
 				</ul>
 			</div>
 		</div>
 	)
 }
 
-Sidebar.propTypes = {
-	activeModules: PropTypes.array.isRequired,
-	handleModuleChange: PropTypes.func.isRequired
-}
-
-function ControlOption({ activeModules, handleModuleChange, name }) {
+function ControlOption({ name, location }) {
+	// console.log(location);
+	const active = location.pathname.includes(name);
 	return (
-		<li onClick={() => handleModuleChange(name)} className={`control-option ${activeModules.includes(name) && 'active'}`}>
-			{ name }
+		<li className={`control-option ${active && 'active'}`}>
+			<Link to={`/${name}`}>{ name }</Link>
 		</li>
 	)
 }
 
-
 ControlOption.propTypes = {
-	activeModules: PropTypes.array.isRequired,
-	handleModuleChange: PropTypes.func.isRequired,
 	name: PropTypes.string.isRequired
 }

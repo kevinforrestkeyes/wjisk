@@ -20,7 +20,6 @@ export default class DepopDisplay extends React.Component {
 			scrapeStatus: '',
 			logContent: []
 		}
-
 		this.toggleViewMode = this.toggleViewMode.bind(this);
 		this.updateProducts = this.updateProducts.bind(this);
 		this.updateScrapeStatus = this.updateScrapeStatus.bind(this);
@@ -131,7 +130,6 @@ export default class DepopDisplay extends React.Component {
 		const { scrapeStatus, lastScrape, view, logContent } = this.state;
 		const { products } = this.props;
 		const scrapeStatusLoaded = ((scrapeStatus.length > 0) && (lastScrape.length > 0));
-
 		return (
 			<div className="depop-display module">
 				<div className="module-inner">
