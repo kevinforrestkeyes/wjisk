@@ -21,11 +21,6 @@ export default class Body extends React.Component {
 		this.addProductsToShopify = this.addProductsToShopify.bind(this);
 	}
 
-	componentDidMount() {
-		console.log(queryString.parse(window.location.href));
-		// console.log(shopifyClientToken);
-	}
-
 	addProductsToShopify(products) {
 		products.forEach(product => addProductsToShopify(product));
 	}
@@ -61,15 +56,6 @@ export default class Body extends React.Component {
 }
 
 function BodyContent({ depopProducts, handleDepopProductsUpdate, handleShopifyProductsUpdate, shopifyProducts, addProductsToShopify }) {
-	const depopProps = {
-		handleDepopProductsUpdate,
-		products: depopProducts,
-		addProductsToShopify
-	};
-	const shopifyProps = {
-		handleShopifyProductsUpdate,
-		products: shopifyProducts
-	};
 	return (
 		<div className="body-content">
 			<Route path='/' component={null} />

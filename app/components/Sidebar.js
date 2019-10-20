@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 
 export default function Sidebar({ location }) {
@@ -22,7 +21,6 @@ export default function Sidebar({ location }) {
 }
 
 function ControlOption({ name, location }) {
-	// console.log(location);
 	const active = location.pathname.includes(name);
 	return (
 		<li className={`control-option ${active && 'active'}`}>

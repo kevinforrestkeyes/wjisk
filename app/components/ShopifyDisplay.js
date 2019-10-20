@@ -1,32 +1,28 @@
 import React from 'react';
+import queryString from 'query-string';
 import ProductTable from './ProductTable';
 import { 
 	getShopifyProducts,
 	getShopifyAuthStatus } from '../utils/api';
 
 export default class ShopifyDisplay extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			authorized: false
-		};
-
-		this.loadProducts = this.loadProducts.bind(this);
-	}
+	state = {
+		authorized: false,
+		clientToken: ''
+	};
 
 	componentDidMount() {
-		getShopifyAuthStatus()
-			.then((res) => {
-				const { authorized } = res;
-				this.setState({
-					authorized
-				});
-				if (authorized) this.loadProducts();
+		const { shopifyClientToken } = queryString.parse(this.props.location.search);
+		if (shopifyClientToken) {
+			this.setState({
+				authorized: true,
+				clientToken: shopifyClientToken
 			});
+			this.loadProducts();
+		}
 	}
 
-	loadProducts() {
+	loadProducts = () => {
 		getShopifyProducts()
 			.then((data) => {
 				const products = data.map(product => {
@@ -61,16 +57,16 @@ export default class ShopifyDisplay extends React.Component {
 		})
 		return (
 			<div className='shopify-display module'>
-					<div className='module-inner'>
-						<div className='module-heading'>
-							<h3>shopify</h3>
-						</div>
-							{ !this.state.authorized 
-								? <AuthorizeMenu />
-								: <Content loadProducts={this.loadProducts} tableProducts={tableProducts} />
-							}
+				<div className='module-inner'>
+					<div className='module-heading'>
+						<h3>shopify</h3>
 					</div>
+						{ !this.state.authorized 
+							? <AuthorizeMenu />
+							: <Content loadProducts={this.loadProducts} tableProducts={tableProducts} />
+						}
 				</div>
+			</div>
 		)
 	}
 }
