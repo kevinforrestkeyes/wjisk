@@ -1,15 +1,8 @@
 import React from 'react';
-import queryString from 'query-string';
 import ProductTable from './ProductTable';
-import { 
-	getShopifyProducts,
-	getShopifyAuthStatus } from '../utils/api';
+import { getShopifyProducts } from '../utils/api';
 
 export default class ShopifyDisplay extends React.Component {
-	state = {
-		authorized: false,
-	};
-
 	componentDidMount() {
 		if (this.props.clientToken) {
 			this.loadProducts();
@@ -17,24 +10,28 @@ export default class ShopifyDisplay extends React.Component {
 	}
 
 	loadProducts = () => {
-		getShopifyProducts()
+		getShopifyProducts(this.props.clientToken)
 			.then((data) => {
-				const products = data.map(product => {
-					const { title, tags } = product;
-					const images = product.images.map(image => image.src);
-					const price = product.variants[0].price;
-					const size = product.variants[0].title;
-					const blurb = product.body_html.replace(/<\/?p> ?/g, '');
-					return {
-						title,
-						blurb,
-						tags,
-						images,
-						price,
-						size
-					}
-				});
-				this.props.handleShopifyProductsUpdate(products);
+				if (data.status === 'success') {
+					const products = data.products.map(product => {
+						const { title, tags } = product;
+						const images = product.images.map(image => image.src);
+						const price = product.variants[0].price;
+						const size = product.variants[0].title;
+						const blurb = product.body_html.replace(/<\/?p> ?/g, '');
+						return {
+							title,
+							blurb,
+							tags,
+							images,
+							price,
+							size
+						}
+					});
+					this.props.handleShopifyProductsUpdate(products);
+				} else {
+					console.log(data);
+				}
 			});
 	}
 

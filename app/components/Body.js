@@ -21,8 +21,8 @@ export default class Body extends React.Component {
 		this.addProductsToShopify = this.addProductsToShopify.bind(this);
 	}
 
-	addProductsToShopify(products) {
-		products.forEach(product => addProductsToShopify(product));
+	addProductsToShopify(products, shopifyClientToken) {
+		products.forEach(product => addProductsToShopify(product, shopifyClientToken));
 	}
 
 	handleDepopProductsUpdate(products) {
@@ -86,6 +86,7 @@ class BodyContent extends React.Component {
 							handleDepopProductsUpdate={handleDepopProductsUpdate}
 							products={depopProducts}
 							addProductsToShopify={addProductsToShopify} 
+							shopifyClientToken={this.state.shopifyClientToken}
 						/>
 					)
 				}}/>

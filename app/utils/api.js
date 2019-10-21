@@ -66,15 +66,15 @@ export function getShopifyAuthStatus() {
 		.then((res) => res);
 }
 
-export function getShopifyProducts() {
-	const targetUrl = `${anpoorteUrl}/get-products`;
-	return fetch(proxyUrl+targetUrl)
+export function getShopifyProducts(clientToken) {
+	const targetUrl = `${proxyUrl}${anpoorteUrl}/get-products`;
+	return fetch(`${targetUrl}?clientToken=${clientToken}`)
 		.then((res) => res.json())
 		.then((res) => res);
 }
 
-export function addProductsToShopify(product) {
-	const targetUrl = `${anpoorteUrl}/add-new-product`;
+export function addProductsToShopify(product, clientToken) {
+	const targetUrl = `${anpoorteUrl}/add-new-product?clientToken=${clientToken}`;
 	return fetch(proxyUrl+targetUrl, {
 		headers: {
       'Content-Type': 'application/json'

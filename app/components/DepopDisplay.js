@@ -96,7 +96,7 @@ export default class DepopDisplay extends React.Component {
 	}
 
 	handleAddProductsToShopify(products) {
-		this.props.addProductsToShopify(products);
+		this.props.addProductsToShopify(products, this.props.shopifyClientToken);
 		alert(`added ${products.length} products to shopify`);
 		this.setState({
 			view: 'products'
