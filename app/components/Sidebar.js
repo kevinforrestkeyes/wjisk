@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 export default function Sidebar({ location }) {
+	console.log(location);
 	return (
 		<div className="sidebar module">
 			<div className="module-inner">

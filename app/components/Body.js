@@ -41,13 +41,18 @@ export default class Body extends React.Component {
 		return (
 			<Router>
 				<div className="body">
-					<BodyContent 
-						handleDepopProductsUpdate={this.handleDepopProductsUpdate} 
-						depopProducts={this.state.depopProducts} 
-						handleShopifyProductsUpdate={this.handleShopifyProductsUpdate} 
-						shopifyProducts={this.state.shopifyProducts}
-						addProductsToShopify={this.addProductsToShopify}
-					/>
+					<Route path='/' render={(props) => {
+						return (
+							<BodyContent 
+								{...props}
+								handleDepopProductsUpdate={this.handleDepopProductsUpdate} 
+								depopProducts={this.state.depopProducts} 
+								handleShopifyProductsUpdate={this.handleShopifyProductsUpdate} 
+								shopifyProducts={this.state.shopifyProducts}
+								addProductsToShopify={this.addProductsToShopify}
+							/>
+						)
+					}}/>
 					<Route path='/' component={Sidebar} />
 				</div>
 			</Router>
@@ -55,29 +60,47 @@ export default class Body extends React.Component {
 	}
 }
 
-function BodyContent({ depopProducts, handleDepopProductsUpdate, handleShopifyProductsUpdate, shopifyProducts, addProductsToShopify }) {
-	return (
-		<div className="body-content">
-			<Route path='/' component={null} />
-			<Route path='/depop' render={(props) => {
-				return (
-					<DepopDisplay {...props}
-						handleDepopProductsUpdate={handleDepopProductsUpdate}
-						products={depopProducts}
-						addProductsToShopify={addProductsToShopify} 
-					/>
-				)
-			}}/>
-			<Route path='/shopify' render={(props) => {
-				return (
-					<ShopifyDisplay {...props}
-						handleShopifyProductsUpdate={handleShopifyProductsUpdate}
-						products={shopifyProducts}
-					/>
-				)
-			}}/>
-		</div>
-	)
+class BodyContent extends React.Component {
+	state = {
+		shopifyClientToken: ''
+	}
+
+	componentDidMount() {
+		const { shopifyClientToken } = queryString.parse(this.props.location.search);
+		if (shopifyClientToken) {
+			this.setState({
+				shopifyClientToken
+			});
+		}
+	}
+
+	render() {
+		const { depopProducts, handleDepopProductsUpdate, handleShopifyProductsUpdate, shopifyProducts, addProductsToShopify } = this.props;
+
+		return (
+			<div className="body-content">
+				<Route path='/' component={null} />
+				<Route path='/depop' render={(props) => {
+					return (
+						<DepopDisplay {...props}
+							handleDepopProductsUpdate={handleDepopProductsUpdate}
+							products={depopProducts}
+							addProductsToShopify={addProductsToShopify} 
+						/>
+					)
+				}}/>
+				<Route path='/shopify' render={(props) => {
+					return (
+						<ShopifyDisplay {...props}
+							clientToken={this.state.shopifyClientToken}
+							handleShopifyProductsUpdate={handleShopifyProductsUpdate}
+							products={shopifyProducts}
+						/>
+					)
+				}}/>
+			</div>
+		)
+	}
 }
 
 BodyContent.propTypes = {

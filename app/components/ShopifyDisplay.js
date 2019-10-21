@@ -8,16 +8,10 @@ import {
 export default class ShopifyDisplay extends React.Component {
 	state = {
 		authorized: false,
-		clientToken: ''
 	};
 
 	componentDidMount() {
-		const { shopifyClientToken } = queryString.parse(this.props.location.search);
-		if (shopifyClientToken) {
-			this.setState({
-				authorized: true,
-				clientToken: shopifyClientToken
-			});
+		if (this.props.clientToken) {
 			this.loadProducts();
 		}
 	}
@@ -55,13 +49,14 @@ export default class ShopifyDisplay extends React.Component {
 				size,
 			}
 		})
+		const authorized = this.props.clientToken.length > 0;
 		return (
 			<div className='shopify-display module'>
 				<div className='module-inner'>
 					<div className='module-heading'>
 						<h3>shopify</h3>
 					</div>
-						{ !this.state.authorized 
+						{ !authorized 
 							? <AuthorizeMenu />
 							: <Content loadProducts={this.loadProducts} tableProducts={tableProducts} />
 						}
