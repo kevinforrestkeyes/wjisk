@@ -31,7 +31,7 @@ export default class Signin extends React.Component {
 					<div className="module-content">
 						<label htmlFor="password">right here bich: </label>
 						<input type="password" name="password" value={this.state.password} onChange={this.handleChange} autoComplete="current-password"/>
-						<input type="submit" value="submit it"/>
+						<input type="submit" value="gib me"/>
 					</div>
 				</form>
 			</div>
