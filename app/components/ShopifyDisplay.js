@@ -82,7 +82,7 @@ class AuthorizeMenu extends React.Component {
 					<input onChange={this.handleShopNameChange} placeholder="enter shop name" type="text"/>
 					<a 
 						className={`button ${shopName.length === 0 ? 'disabled' : ''}`}
-						href={`https://7cbc7743.ngrok.io/shopify?shop=${shopName}.myshopify.com`}>
+						href={`https://anpoorte.herokuapp.com/shopify?shop=${shopName}.myshopify.com`}>
 							authorize
 					</a>
 				</div>
