@@ -12,13 +12,7 @@ export default class Layout extends React.Component {
 			token: '',
 		};
 	}
-
-	componentDidMount() {
-		fetch('https://webapi.depop.com/api/v1/shop/4835511/products?limit=1&offset_id=MTIxMTYwMTg0fDIwMTktMTEtMTJUMTc6MDA6MjUuODA4Wnw0NjA')
-			.then((response) => response.json())
-			.then((data) => console.log(JSON.stringify(data)))
-	}
-
+	
 	handlePasswordSubmit = (password) => {
 		this.setState({
 			token: password
