@@ -12,6 +12,7 @@ module.exports = {
 		rules: [
 			{ test: /\.(js)$/, use: 'babel-loader' },
 			{ test: /\.css$/, use: [ 'style-loader', 'css-loader' ]},
+			{test: /\.(jpe?g|png|gif|ico)$/i, loader: 'file-loader?name=[name].[ext]'},
 			{
         test: /\.s[ac]ss$/i,
         use: [
@@ -20,16 +21,13 @@ module.exports = {
           'sass-loader',
         ],
 			},
-			{	
-				test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
-				loader: 'file-loader?name=[name].[ext]'
-			}
 		]
 	},
 	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: 'app/index.html'
+			template: 'app/index.html',
+			favicon: 'favicon.ico'
 		})
 	],
 	devServer: {
