@@ -1,12 +1,10 @@
-// only temporary until this is live
-const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 const anpoorteUrl = 'https://anpoorte.herokuapp.com';
 // const anpoorteUrl = 'https://2f419c48.ngrok.io';
 const denishokuUrl = 'http://denishoku.herokuapp.com';
 
 export function getDepopProducts() {
 	const targetUrl = `${denishokuUrl}/get-depop-products`;
-	return fetch(proxyUrl+targetUrl)
+	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((products) => {
 			return products;
@@ -25,7 +23,7 @@ export function getDepopScrapeInfo() {
 
 export function getDepopScrapeStatus() {
 	const targetUrl = `${denishokuUrl}/scrape-status`;
-	return fetch(proxyUrl+targetUrl)
+	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((status) => {
 			return status;
@@ -34,7 +32,7 @@ export function getDepopScrapeStatus() {
 
 function getDepopLogData() {
 	const targetUrl = `${denishokuUrl}/get-log`;
-	return fetch(proxyUrl+targetUrl)
+	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((log) => {
 			return log;
@@ -43,7 +41,7 @@ function getDepopLogData() {
 
 export function updateDepopProducts() {
 	const targetUrl = `${denishokuUrl}/update-depop-products`;
-	return fetch(proxyUrl+targetUrl)
+	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((res) => {
 			return res;
@@ -52,7 +50,7 @@ export function updateDepopProducts() {
 
 export function testShopifyEndpoint() {
 	const targetUrl = `${anpoorteUrl}/`;
-	return fetch(proxyUrl+targetUrl)
+	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((res) => {
 			console.log(res);
@@ -61,13 +59,13 @@ export function testShopifyEndpoint() {
 
 export function getShopifyAuthStatus() {
 	const targetUrl = `${anpoorteUrl}/get-auth-status`;
-	return fetch(proxyUrl+targetUrl)
+	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((res) => res);
 }
 
 export function getShopifyProducts(clientToken) {
-	const targetUrl = `${proxyUrl}${anpoorteUrl}/get-products`;
+	const targetUrl = `${anpoorteUrl}/get-products`;
 	return fetch(`${targetUrl}?clientToken=${clientToken}`)
 		.then((res) => res.json())
 		.then((res) => res);
@@ -75,7 +73,7 @@ export function getShopifyProducts(clientToken) {
 
 export function addProductsToShopify(product, clientToken) {
 	const targetUrl = `${anpoorteUrl}/add-new-product?clientToken=${clientToken}`;
-	return fetch(proxyUrl+targetUrl, {
+	return fetch(targetUrl, {
 		headers: {
       'Content-Type': 'application/json'
     },
