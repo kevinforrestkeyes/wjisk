@@ -28,7 +28,10 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: 'app/index.html',
 			favicon: 'favicon.ico'
-		})
+		}),
+		new CopyPlugin([
+			{ from : '_redirects' }
+		])
 	],
 	devServer: {
 		historyApiFallback: true,
