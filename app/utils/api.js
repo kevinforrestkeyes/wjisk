@@ -1,6 +1,6 @@
 const anpoorteUrl = 'https://anpoorte.herokuapp.com';
 // const anpoorteUrl = 'https://2f419c48.ngrok.io';
-const Url = 'https://denishoku.herokuapp.com';
+const denishokuUrl = 'https://denishoku.herokuapp.com';
 
 export function getDepopProducts() {
 	const targetUrl = `${denishokuUrl}/get-depop-products`;
