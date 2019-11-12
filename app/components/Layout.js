@@ -9,12 +9,14 @@ export default class Layout extends React.Component {
 		super(props);
 
 		this.state = {
-			token: ''
+			token: '',
 		};
 	}
 
 	handlePasswordSubmit = (password) => {
-		console.log(password);
+		this.setState({
+			token: password
+		});
 	}
 
 	render() {

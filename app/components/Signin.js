@@ -23,11 +23,16 @@ export default class Signin extends React.Component {
 
 	render() {
 		return (
-			<div className="sign-in">
-				<form onSubmit={this.handleSubmit}>
-					<label htmlFor="password">why don't ya spill yer beans</label>
-					<input type="password" name="password" value={this.state.password} onChange={this.handleChange} autoComplete="current-password"/>
-					<input type="submit" value="submit it"/>
+			<div className="sign-in module">
+				<form className="module-inner" onSubmit={this.handleSubmit}>
+					<div className="module-heading">
+						<h3>password pls</h3>
+					</div>
+					<div className="module-content">
+						<label htmlFor="password">right here bich: </label>
+						<input type="password" name="password" value={this.state.password} onChange={this.handleChange} autoComplete="current-password"/>
+						<input type="submit" value="submit it"/>
+					</div>
 				</form>
 			</div>
 		)
