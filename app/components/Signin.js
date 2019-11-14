@@ -26,12 +26,12 @@ export default class Signin extends React.Component {
 			<div className="sign-in module">
 				<form className="module-inner" onSubmit={this.handleSubmit}>
 					<div className="module-heading">
-						<h3>password pls</h3>
+						<h3>restricted</h3>
 					</div>
 					<div className="module-content">
-						<label htmlFor="password">right here bich: </label>
+						<label htmlFor="password">enter passcode to proceed: </label>
 						<input type="password" name="password" value={this.state.password} onChange={this.handleChange} autoComplete="current-password"/>
-						<input type="submit" value="gib me"/>
+						<input className="button" type="submit" value="enter"/>
 					</div>
 				</form>
 			</div>

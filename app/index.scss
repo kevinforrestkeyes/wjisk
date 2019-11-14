@@ -57,7 +57,7 @@ button.page-control {
 	}
 }
 
-input[type="text"], textarea {
+input[type="text"], input[type="password"], textarea {
 	all: unset;
 	width: 200px;
 	background-color: $white;
@@ -389,6 +389,27 @@ body {
 					flex: 1;
 				}
 			}
+		}
+	}
+}
+
+.module.sign-in {
+	width: 226px;
+	margin: 12px auto;
+
+	.module-content {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		* {
+			margin: 4px 0;
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		.button, label {
+			text-align: center;
 		}
 	}
 }
