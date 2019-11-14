@@ -55,23 +55,9 @@ export default class DepopDisplay extends React.Component {
 			.then((data) => {
 				const scrapeStatus = data.status.updateInProgress ? 'in-progress' : 'completed';
 				let lastScrape = 'N/A';
-				if (data.log.length > 0) {
-					const lastScrapeIndex = Object.keys(data.log)
-					.sort((a, b) => {
-						return new Date(data.log[b].runStartTime) - new Date(data.log[a].runStartTime);
-					})
-					.find(index => {
-						const log = data.log[index];
-						if ((log.request === 'update-depop-products') && (log.runEndTime !== null)) {
-							return true;
-						}
-					});
-					lastScrape = lastScrapeIndex !== undefined ? data.log[lastScrapeIndex].runEndTime : 'N/A';
-				}
 				this.setState({
 					scrapeStatus,
-					lastScrape,
-					logContent: data.log
+					lastScrape
 				})
 			});
 	}
@@ -112,12 +98,12 @@ export default class DepopDisplay extends React.Component {
 	updateProducts() {
 		getDepopProducts()
 			.then((data) => {
+				console.log(data);
 				const products = data.map(product => {
-					const { blurb, images, size, price } = product;
+					const { description, images, price } = product;
 					return {
 						selected: false,
-						blurb,
-						size,
+						description,
 						images,
 						price
 					}
@@ -129,6 +115,7 @@ export default class DepopDisplay extends React.Component {
 	render() {
 		const { scrapeStatus, lastScrape, view, logContent } = this.state;
 		const { products } = this.props;
+		console.log(products);
 		const scrapeStatusLoaded = ((scrapeStatus.length > 0) && (lastScrape.length > 0));
 		return (
 			<div className="depop-display module">

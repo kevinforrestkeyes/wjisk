@@ -1,9 +1,10 @@
 const anpoorteUrl = 'https://anpoorte.herokuapp.com';
 // const anpoorteUrl = 'https://2f419c48.ngrok.io';
-const denishokuUrl = 'https://denishoku.herokuapp.com';
+// const denishokuUrl = 'https://denishoku.herokuapp.com';
+const wizardUrl = 'http://localhost:2222';
 
 export function getDepopProducts() {
-	const targetUrl = `${denishokuUrl}/get-depop-products`;
+	const targetUrl = `${wizardUrl}/get-depop-products`;
 	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((products) => {
@@ -13,16 +14,15 @@ export function getDepopProducts() {
 
 export function getDepopScrapeInfo() {
 	return Promise.all([
-		getDepopLogData(),
+		// getDepopLogData(),
 		getDepopScrapeStatus()
-	]).then(([ log, status ]) => ({
-		log,
+	]).then( status => ({
 		status
 	}));
 }
 
 export function getDepopScrapeStatus() {
-	const targetUrl = `${denishokuUrl}/scrape-status`;
+	const targetUrl = `${wizardUrl}/scrape-status`;
 	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((status) => {
@@ -31,7 +31,7 @@ export function getDepopScrapeStatus() {
 }
 
 function getDepopLogData() {
-	const targetUrl = `${denishokuUrl}/get-log`;
+	const targetUrl = `${wizardUrl}/get-log`;
 	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((log) => {
@@ -40,7 +40,7 @@ function getDepopLogData() {
 }
 
 export function updateDepopProducts() {
-	const targetUrl = `${denishokuUrl}/update-depop-products`;
+	const targetUrl = `${wizardUrl}/update-depop-products`;
 	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((res) => {
