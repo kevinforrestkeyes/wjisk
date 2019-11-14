@@ -104,7 +104,7 @@ ProductHandler.propTypes = {
 }
 
 function ProductEditor({ product, updateProductForShopify }) {
-	const { blurb, images, price, size } = product;
+	const { description, images, price } = product;
 	const title = product.title !== undefined ? product.title : '';
 	const tags = product.tags !== undefined ? product.tags : '';
 	return (
@@ -122,13 +122,13 @@ function ProductEditor({ product, updateProductForShopify }) {
 						value={title} 
 						placeholder="title"
 					/>
-					<label htmlFor="blurb">blurb</label>
+					<label htmlFor="description">description</label>
 					<textarea 
 						type="text" 
-						name="blurb" 
+						name="description" 
 						onChange={updateProductForShopify} 
-						value={blurb} 
-						placeholder="blurb"
+						value={description} 
+						placeholder="description"
 					/>
 				</div>
 				<div className="column">
@@ -139,14 +139,6 @@ function ProductEditor({ product, updateProductForShopify }) {
 						onChange={updateProductForShopify} 
 						value={price !== null ? price : ''} 
 						placeholder="price"
-					/>
-					<label htmlFor="size">size</label>
-					<input 
-						type="text" 
-						name="size" 
-						onChange={updateProductForShopify} 
-						value={size !== null ? size : ''} 
-						placeholder="size"
 					/>
 					<label htmlFor="tags">tags</label>
 					<input 
@@ -169,12 +161,11 @@ ProductEditor.propTypes = {
 
 function ProductConfirmation({ products }) {
 	const productMini = products.map(product => {
-		const { images, title, price, size} = product;
+		const { images, title, price} = product;
 		return {
 			images,
 			title,
 			price,
-			size
 		}
 	})
 	return (

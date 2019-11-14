@@ -98,7 +98,6 @@ export default class DepopDisplay extends React.Component {
 	updateProducts() {
 		getDepopProducts()
 			.then((data) => {
-				console.log(data);
 				const products = data.map(product => {
 					const { description, images, price } = product;
 					return {
@@ -115,7 +114,6 @@ export default class DepopDisplay extends React.Component {
 	render() {
 		const { scrapeStatus, lastScrape, view, logContent } = this.state;
 		const { products } = this.props;
-		console.log(products);
 		const scrapeStatusLoaded = ((scrapeStatus.length > 0) && (lastScrape.length > 0));
 		return (
 			<div className="depop-display module">

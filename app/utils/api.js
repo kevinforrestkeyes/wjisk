@@ -14,7 +14,6 @@ export function getDepopProducts() {
 
 export function getDepopScrapeInfo() {
 	return Promise.all([
-		// getDepopLogData(),
 		getDepopScrapeStatus()
 	]).then( status => ({
 		status
@@ -27,15 +26,6 @@ export function getDepopScrapeStatus() {
 		.then((res) => res.json())
 		.then((status) => {
 			return status;
-		});
-}
-
-function getDepopLogData() {
-	const targetUrl = `${wizardUrl}/get-log`;
-	return fetch(targetUrl)
-		.then((res) => res.json())
-		.then((log) => {
-			return log;
 		});
 }
 
