@@ -1,7 +1,7 @@
 const anpoorteUrl = 'https://anpoorte.herokuapp.com';
 // const anpoorteUrl = 'https://2f419c48.ngrok.io';
-// const denishokuUrl = 'https://denishoku.herokuapp.com';
-const wizardUrl = 'http://localhost:2222';
+// const wizardUrl = 'http://localhost:2222';
+const wizardUrl = 'https://popwizard.herokuapp.com/';
 
 export function getDepopProducts() {
 	const targetUrl = `${wizardUrl}/get-depop-products`;
