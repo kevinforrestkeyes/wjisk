@@ -17,7 +17,6 @@ export default class ShopifyDisplay extends React.Component {
 						const { title, tags } = product;
 						const images = product.images.map(image => image.src);
 						const price = product.variants[0].price;
-						const size = product.variants[0].title;
 						const description = product.body_html.replace(/<\/?p> ?/g, '');
 						return {
 							title,
@@ -25,7 +24,6 @@ export default class ShopifyDisplay extends React.Component {
 							tags,
 							images,
 							price,
-							size
 						}
 					});
 					this.props.handleShopifyProductsUpdate(products);
@@ -37,13 +35,12 @@ export default class ShopifyDisplay extends React.Component {
 
 	render() {
 		const tableProducts = this.props.products.map(product => {
-			const { title, description, images, price, size } = product;
+			const { title, description, images, price } = product;
 			return {
 				title, 
 				description,
 				images, 
 				price, 
-				size,
 			}
 		})
 		const authorized = this.props.clientToken.length > 0;
