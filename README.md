@@ -1,3 +1,3 @@
 # WJISK
 
-react UI for moving product data between depop (via [denishoku](https://github.com/kevinforrestkeyes/denishoku)) and shopify (via [anpoorte](https://github.com/kevinforrestkeyes/anpoorte))
+react UI for moving product data between depop (via [popwizard](https://github.com/kevinforrestkeyes/popwizard)) and shopify (via [anpoorte](https://github.com/kevinforrestkeyes/anpoorte))
