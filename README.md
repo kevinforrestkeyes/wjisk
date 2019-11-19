@@ -4,7 +4,7 @@ wjisk is a web app for taking product data that has been uploaded to [Depop](htt
 
 ## this repository
 
-this front-end was built using react, and allows the user initiate new scrapes of product data from their Depop store, view the resulting products, select products to be uploaded to Shopify, then edit the products' data individually before sending the products to be uploaded to Shopify. the user can also view their products currently listed on Shopify.
+this front-end was built using React, and allows the user initiate new scrapes of product data from their Depop store, view the resulting products, select products to be uploaded to Shopify, then edit the products' data individually before sending the products to be uploaded to Shopify. the user can also view their products currently listed on Shopify.
 
 ## supporting applications
 
