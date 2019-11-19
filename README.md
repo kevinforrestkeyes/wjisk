@@ -8,5 +8,5 @@ this front-end was built using react, and allows the user initiate new scrapes o
 
 ## supporting applications
 
-*(anpoorte)[https://github.com/kevinforrestkeyes/anpoorte]
-*(popwizard)[https://github.com/kevinforrestkeyes/popwizard]
+*[anpoorte](https://github.com/kevinforrestkeyes/anpoorte)
+*[popwizard](https://github.com/kevinforrestkeyes/popwizard)
