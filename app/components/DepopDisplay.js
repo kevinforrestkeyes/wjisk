@@ -128,14 +128,6 @@ export default class DepopDisplay extends React.Component {
 								<p>last scrape: {lastScrape}</p>
 								<div className="button-container">
 									<button 
-										onClick={() => this.toggleViewMode(view === 'log' ? 'products' : 'log')}
-									>
-										{ view !== 'log' 
-											? 'show'
-											: 'hide'
-										} log
-									</button>
-									<button 
 										disabled={scrapeStatus === 'in-progress'} 
 										onClick={this.startNewDepopScrape}>
 										{scrapeStatus === 'in-progress'
@@ -163,9 +155,6 @@ export default class DepopDisplay extends React.Component {
 									toggleAllProductSelect={this.toggleAllProductSelect}
 								/>
 							</>
-						}
-						{ view === 'log' && 
-							<LogView logContent={logContent} />
 						}
 						{ view === 'edit' && products.length > 0 &&
 							<>
@@ -213,97 +202,4 @@ TableControls.propTypes = {
 	toggleViewMode: PropTypes.func.isRequired,
 	updateDepopProducts: PropTypes.func,
 	enableEdit: PropTypes.bool
-}
-
-function LogView({ logContent }) {
-	const logSorted = logContent.sort((a, b) => {
-		return new Date(b.runStartTime) - new Date(a.runStartTime);
-	})
-	return (
-		<table className="log-table">
-			<thead>
-				<tr>
-					<th className="id">id</th>
-					<th className="start">run start time</th>
-					<th className="end">run end time</th>
-					<th className="expand">expand</th>
-				</tr>
-			</thead>
-			<tbody>
-				{ logSorted.map(logEntry => <LogEntry key={logEntry.id} logData={logEntry} />) }
-			</tbody>
-		</table>
-	)
-}
-
-LogView.propTypes = {
-	logContent: PropTypes.array.isRequired
-}
-
-class LogEntry extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			expanded: false
-		}
-
-		this.toggleExpand = this.toggleExpand.bind(this);
-	}
-
-	toggleExpand() {
-		const expanded = !this.state.expanded;
-		this.setState({
-			expanded
-		})
-	}
-
-	render() {
-		const { logData } = this.props;
-		return (
-			<>
-				<tr>
-					<td className="id">{ logData.id }</td>
-					<td className="start">{ logData.runStartTime }</td>
-					<td className="end">{ logData.runEndTime !== null ? logData.runEndTime : 'N/A' }</td>
-					<td className="expand">
-						<button onClick={this.toggleExpand} className="expand-collapse">
-							{ this.state.expanded 
-								? <Minus />
-								: <Plus />
-							}
-						</button>
-					</td>
-				</tr>
-				{ this.state.expanded && 
-					<tr className="log-details">
-						<td>
-							<table>
-								<thead>
-									<tr>
-										<th className="timestamp">entry time</th>
-										<th className="message">entry message</th>
-									</tr>
-								</thead>
-								<tbody>
-									{ logData.logContents.map((subEntry, index) => {
-										return (
-											<tr key={index}>
-												<td className="timestamp">{ subEntry.timestamp.split(', ')[1] }</td>
-												<td className="message">{ subEntry.entry }</td>
-											</tr>
-										)
-									})}
-								</tbody>
-							</table>
-						</td>
-					</tr>
-				}
-			</>
-		)
-	}
-}
-
-LogEntry.propTypes = {
-	logData: PropTypes.object.isRequired
 }
