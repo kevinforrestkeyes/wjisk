@@ -16,9 +16,7 @@ export default class DepopDisplay extends React.Component {
 
 		this.state = {
 			view: 'products',
-			lastScrape: '',
 			scrapeStatus: '',
-			logContent: []
 		}
 		this.toggleViewMode = this.toggleViewMode.bind(this);
 		this.updateProducts = this.updateProducts.bind(this);
@@ -53,11 +51,9 @@ export default class DepopDisplay extends React.Component {
 	updateScrapeStatus() {
 		getDepopScrapeInfo()
 			.then((data) => {
-				const scrapeStatus = data.status.updateInProgress ? 'in-progress' : 'completed';
-				let lastScrape = 'N/A';
+				const scrapeStatus = data.status[0].updateInProgress ? 'in-progress' : 'completed';
 				this.setState({
 					scrapeStatus,
-					lastScrape
 				})
 			});
 	}
@@ -112,9 +108,9 @@ export default class DepopDisplay extends React.Component {
 	}
 
 	render() {
-		const { scrapeStatus, lastScrape, view, logContent } = this.state;
+		const { scrapeStatus, view } = this.state;
 		const { products } = this.props;
-		const scrapeStatusLoaded = ((scrapeStatus.length > 0) && (lastScrape.length > 0));
+		const scrapeStatusLoaded = scrapeStatus.length > 0;
 		return (
 			<div className="depop-display module">
 				<div className="module-inner">
@@ -125,7 +121,6 @@ export default class DepopDisplay extends React.Component {
 						{ scrapeStatusLoaded
 						? <>
 								<p>scrape status: <span className={scrapeStatus}>{scrapeStatus}</span></p>
-								<p>last scrape: {lastScrape}</p>
 								<div className="button-container">
 									<button 
 										disabled={scrapeStatus === 'in-progress'} 
