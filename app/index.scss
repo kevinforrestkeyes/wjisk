@@ -67,7 +67,8 @@ input[type="text"], input[type="password"], textarea {
 	padding: 4px;
 }
 
-.module-status {
+.module-status,
+.depop-store-input {
 	input {
 		background-color: lighten($white, 20%);
 		font-size: 14px;
@@ -170,7 +171,8 @@ body {
 		box-sizing: border-box;
 	}
 
-	.module-status {
+	.module-status,
+	.depop-store-input {
 		display: flex;
 		padding: 8px;
 		align-items: center;

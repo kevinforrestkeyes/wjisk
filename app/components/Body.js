@@ -75,6 +75,10 @@ class BodyContent extends React.Component {
 		}
 	}
 
+	handleDepopStoreSubmit = (storeName) => {
+		console.log(storeName);
+	} 
+
 	render() {
 		const { depopProducts, handleDepopProductsUpdate, handleShopifyProductsUpdate, shopifyProducts, addProductsToShopify } = this.props;
 
@@ -89,6 +93,7 @@ class BodyContent extends React.Component {
 							addProductsToShopify={addProductsToShopify} 
 							shopifyClientToken={this.state.shopifyClientToken}
 							depopStoreId={this.state.depopStoreId}
+							handleStoreSubmit={this.handleDepopStoreSubmit}
 						/>
 					)
 				}}/>

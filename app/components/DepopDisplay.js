@@ -108,7 +108,7 @@ export default class DepopDisplay extends React.Component {
 
 	render() {
 		const { scrapeStatus, view } = this.state;
-		const { products, shopifyClientToken } = this.props;
+		const { products, shopifyClientToken, depopStoreId, handleStoreSubmit } = this.props;
 		const scrapeStatusLoaded = scrapeStatus.length > 0;
 		const shopifyAuthorized = shopifyClientToken.length > 0;
 		return (
@@ -117,54 +117,61 @@ export default class DepopDisplay extends React.Component {
 					<div className="module-heading">
 						<h3>depop</h3>
 					</div>
-					<div className="module-status">
-						{ scrapeStatusLoaded
-						? <>
-								<p>scrape status: <span className={scrapeStatus}>{scrapeStatus}</span></p>
-								<div className="button-container">
-									<button 
-										disabled={scrapeStatus === 'in-progress'} 
-										onClick={this.startNewDepopScrape}>
-										{scrapeStatus === 'in-progress'
-											? 'scrape in progress'
-											: 'new scrape'
-										}
-									</button>
+					{ depopStoreId.length > 0 
+						? (
+							<>
+								<div className="module-status">
+									{ scrapeStatusLoaded
+									? <>
+											<p>scrape status: <span className={scrapeStatus}>{scrapeStatus}</span></p>
+											<div className="button-container">
+												<button 
+													disabled={scrapeStatus === 'in-progress'} 
+													onClick={this.startNewDepopScrape}>
+													{scrapeStatus === 'in-progress'
+														? 'scrape in progress'
+														: 'new scrape'
+													}
+												</button>
+											</div>
+										</>
+									: <p>loading status...</p>
+									}
+								</div>
+								<div className="module-content">
+									{ view === 'products' && 
+										<>
+											<TableControls 
+												view={view} 
+												updateProducts={this.updateProducts} 
+												toggleViewMode={this.toggleViewMode}
+												enableEdit={checkIfAnyProductsSelected(products)}
+												shopifyAuthorized={shopifyAuthorized}
+											/>
+											<ProductTable 
+												products={products} 
+												handleProductSelect={this.handleProductSelect}
+												toggleAllProductSelect={this.toggleAllProductSelect}
+											/>
+										</>
+									}
+									{ view === 'edit' && products.length > 0 &&
+										<>
+											<TableControls 
+												view={view} 
+												toggleViewMode={this.toggleViewMode}
+											/>
+											<ProductHandler 
+												products={products.filter(products => products.selected)} 
+												addProductsToShopify={this.handleAddProductsToShopify}
+											/>
+										</>
+									}
 								</div>
 							</>
-						: <p>loading status...</p>
-						}
-					</div>
-					<div className="module-content">
-						{ view === 'products' && 
-							<>
-								<TableControls 
-									view={view} 
-									updateProducts={this.updateProducts} 
-									toggleViewMode={this.toggleViewMode}
-									enableEdit={checkIfAnyProductsSelected(products)}
-									shopifyAuthorized={shopifyAuthorized}
-								/>
-								<ProductTable 
-									products={products} 
-									handleProductSelect={this.handleProductSelect}
-									toggleAllProductSelect={this.toggleAllProductSelect}
-								/>
-							</>
-						}
-						{ view === 'edit' && products.length > 0 &&
-							<>
-								<TableControls 
-									view={view} 
-									toggleViewMode={this.toggleViewMode}
-								/>
-								<ProductHandler 
-									products={products.filter(products => products.selected)} 
-									addProductsToShopify={this.handleAddProductsToShopify}
-								/>
-							</>
-						}
-					</div>
+						)
+						: <DepopStoreInput handleStoreSubmit={handleStoreSubmit} />
+					}
 				</div>
 			</div>
 		)
@@ -201,4 +208,33 @@ TableControls.propTypes = {
 	updateDepopProducts: PropTypes.func,
 	enableEdit: PropTypes.bool,
 	shopifyAuthorized: PropTypes.bool
+}
+
+class DepopStoreInput extends React.Component {
+	state = {
+		storeName: ''
+	};
+
+	updateStoreName = (e) => {
+		this.setState({
+			storeName: e.target.value
+		})
+	}
+
+	handleSubmit = (e) => {
+		e.preventDefault();
+		this.props.handleStoreSubmit(this.state.storeName);
+	}
+
+	render() {
+		const { storeName } = this.state;
+		return (
+			<div className="depop-store-input">
+				<form onSubmit={this.handleSubmit}>
+					<input type="text" onChange={this.updateStoreName} placeholder="enter store name" value={storeName} />
+					<input className="button" type="submit" value="submit"/>
+				</form>
+			</div>
+		)
+	}
 }
