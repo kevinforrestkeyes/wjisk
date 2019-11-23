@@ -62,7 +62,8 @@ export default class Body extends React.Component {
 
 class BodyContent extends React.Component {
 	state = {
-		shopifyClientToken: ''
+		shopifyClientToken: '',
+		depopStoreId: ''
 	}
 
 	componentDidMount() {
@@ -87,6 +88,7 @@ class BodyContent extends React.Component {
 							products={depopProducts}
 							addProductsToShopify={addProductsToShopify} 
 							shopifyClientToken={this.state.shopifyClientToken}
+							depopStoreId={this.state.depopStoreId}
 						/>
 					)
 				}}/>

@@ -108,8 +108,9 @@ export default class DepopDisplay extends React.Component {
 
 	render() {
 		const { scrapeStatus, view } = this.state;
-		const { products } = this.props;
+		const { products, shopifyClientToken } = this.props;
 		const scrapeStatusLoaded = scrapeStatus.length > 0;
+		const shopifyAuthorized = shopifyClientToken.length > 0;
 		return (
 			<div className="depop-display module">
 				<div className="module-inner">
@@ -142,6 +143,7 @@ export default class DepopDisplay extends React.Component {
 									updateProducts={this.updateProducts} 
 									toggleViewMode={this.toggleViewMode}
 									enableEdit={checkIfAnyProductsSelected(products)}
+									shopifyAuthorized={shopifyAuthorized}
 								/>
 								<ProductTable 
 									products={products} 
@@ -175,12 +177,14 @@ DepopDisplay.propTypes = {
 	products: PropTypes.array.isRequired
 }
 
-function TableControls({ view, toggleViewMode, updateProducts, enableEdit }) {
+function TableControls({ view, toggleViewMode, updateProducts, enableEdit, shopifyAuthorized }) {
 	return (
 		<div className="table-controls">
 			{ view === 'products' && 
 				<>
-					<button disabled={!enableEdit} onClick={() => toggleViewMode('edit')}>add selected products to shopify</button>
+					<button disabled={!(shopifyAuthorized && !enableEdit)} onClick={() => toggleViewMode('edit')}>
+						{ shopifyAuthorized ? 'add selected products to shopify' : 'must authorize shopify first'}
+					</button>
 					<button onClick={updateProducts}>reload products</button>
 				</>
 			}
@@ -195,5 +199,6 @@ TableControls.propTypes = {
 	view: PropTypes.string.isRequired,
 	toggleViewMode: PropTypes.func.isRequired,
 	updateDepopProducts: PropTypes.func,
-	enableEdit: PropTypes.bool
+	enableEdit: PropTypes.bool,
+	shopifyAuthorized: PropTypes.bool
 }
