@@ -209,8 +209,7 @@ body {
 	height: 22px;
 }
 
-.product-table, 
-.log-table {
+.product-table {
 	height: 464px;
 	overflow-y: scroll;
 	display: block;
@@ -310,29 +309,6 @@ body {
 	th {
 		&.selected {
 			padding: 2px 0 0 8px;
-		}
-	}
-
-	tr.log-details {
-		padding: 0 0 0 8%;
-
-		&>td {
-			padding: 0;
-		}
-
-		table {
-			display: inline-block;
-			width: 100%;
-
-			.timestamp {
-				flex: 1;
-				padding: 0;
-			}
-
-			.message {
-				flex: 4;
-				padding: 0;
-			}
 		}
 	}
 }

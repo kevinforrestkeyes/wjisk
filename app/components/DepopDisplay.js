@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProductTable from './ProductTable';
 import ProductHandler from './ProductHandler';
-import { Plus, Minus } from './Icons';
 import { checkIfAnyProductsSelected } from '../utils/helpers';
 import { 
 	getDepopProducts, 
