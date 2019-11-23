@@ -9,15 +9,15 @@ export default class Signin extends React.Component {
 		};
 	}
 
-	handleChange = (event) => {
-		event.preventDefault();
+	handleChange = (e) => {
+		e.preventDefault();
 		this.setState({
 			password: event.target.value
 		});
 	}
 
-	handleSubmit = (event) => {
-		event.preventDefault();
+	handleSubmit = (e) => {
+		e.preventDefault();
 		this.props.handlePasswordSubmit(this.state.password);
 	}
 
