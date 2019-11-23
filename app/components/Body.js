@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import DepopDisplay from './DepopDisplay';
 import ShopifyDisplay from './ShopifyDisplay';
 import Sidebar from './Sidebar';
-import { addProductsToShopify } from '../utils/api';
+import { addProductsToShopify, getDepopStoreIDFromStoreName } from '../utils/api';
 
 export default class Body extends React.Component {
 	constructor(props) {
@@ -76,7 +76,7 @@ class BodyContent extends React.Component {
 	}
 
 	handleDepopStoreSubmit = (storeName) => {
-		console.log(storeName);
+		getDepopStoreIDFromStoreName(storeName);
 	} 
 
 	render() {

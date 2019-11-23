@@ -20,6 +20,13 @@ export function getDepopScrapeInfo() {
 	}));
 }
 
+export function getDepopStoreIDFromStoreName(storeName) {
+	const targetUrl = `${wizardUrl}/get-store-id?username=${storeName}`;
+	return fetch(targetUrl)
+		.then(res => res.json())
+		.then(data => console.log(data));
+}
+
 export function getDepopScrapeStatus() {
 	const targetUrl = `${wizardUrl}/scrape-status`;
 	return fetch(targetUrl)
