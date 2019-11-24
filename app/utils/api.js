@@ -3,8 +3,8 @@ const anpoorteUrl = 'https://anpoorte.herokuapp.com';
 const wizardUrl = 'http://localhost:2222';
 // const wizardUrl = 'https://popwizard.herokuapp.com';
 
-export function getDepopProducts() {
-	const targetUrl = `${wizardUrl}/get-depop-products`;
+export function getDepopProducts(storeId) {
+	const targetUrl = `${wizardUrl}/get-depop-products?userid=${storeId}`;
 	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((products) => {
@@ -15,7 +15,7 @@ export function getDepopProducts() {
 export function getDepopScrapeInfo() {
 	return Promise.all([
 		getDepopScrapeStatus()
-	]).then( status => ({
+	]).then(status => ({
 		status
 	}));
 }
@@ -24,7 +24,7 @@ export function getDepopStoreIDFromStoreName(storeName) {
 	const targetUrl = `${wizardUrl}/get-store-id?username=${storeName}`;
 	return fetch(targetUrl)
 		.then(res => res.json())
-		.then(data => console.log(data));
+		.then(data => data.id);
 }
 
 export function getDepopScrapeStatus() {
@@ -36,8 +36,8 @@ export function getDepopScrapeStatus() {
 		});
 }
 
-export function updateDepopProducts() {
-	const targetUrl = `${wizardUrl}/update-depop-products`;
+export function updateDepopProducts(storeId) {
+	const targetUrl = `${wizardUrl}/update-depop-products?userid=${storeId}`;
 	return fetch(targetUrl)
 		.then((res) => res.json())
 		.then((res) => {

@@ -76,8 +76,13 @@ class BodyContent extends React.Component {
 	}
 
 	handleDepopStoreSubmit = (storeName) => {
-		getDepopStoreIDFromStoreName(storeName);
-	} 
+		getDepopStoreIDFromStoreName(storeName)
+			.then(id => {
+				this.setState({
+					depopStoreId: id
+				})
+			});
+	}
 
 	render() {
 		const { depopProducts, handleDepopProductsUpdate, handleShopifyProductsUpdate, shopifyProducts, addProductsToShopify } = this.props;

@@ -58,7 +58,7 @@ export default class DepopDisplay extends React.Component {
 	}
 
 	startNewDepopScrape() {
-		updateDepopProducts()
+		updateDepopProducts(this.props.depopStoreId)
 			.then(() => this.updateScrapeStatus());
 	}
 
@@ -91,7 +91,7 @@ export default class DepopDisplay extends React.Component {
 	}
 
 	updateProducts() {
-		getDepopProducts()
+		getDepopProducts(this.props.depopStoreId)
 			.then((data) => {
 				const products = data.map(product => {
 					const { description, images, price } = product;
