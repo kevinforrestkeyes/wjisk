@@ -189,7 +189,7 @@ function TableControls({ view, toggleViewMode, updateProducts, enableEdit, shopi
 		<div className="table-controls">
 			{ view === 'products' && 
 				<>
-					<button disabled={!(shopifyAuthorized && !enableEdit)} onClick={() => toggleViewMode('edit')}>
+					<button disabled={!(shopifyAuthorized && enableEdit)} onClick={() => toggleViewMode('edit')}>
 						{ shopifyAuthorized ? 'add selected products to shopify' : 'must authorize shopify first'}
 					</button>
 					<button onClick={updateProducts}>reload products</button>
