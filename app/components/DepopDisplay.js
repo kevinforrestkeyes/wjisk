@@ -16,6 +16,7 @@ export default class DepopDisplay extends React.Component {
 		this.state = {
 			view: 'products',
 			scrapeStatus: '',
+			initialLoad: false,
 		}
 		this.toggleViewMode = this.toggleViewMode.bind(this);
 		this.updateProducts = this.updateProducts.bind(this);
@@ -41,6 +42,15 @@ export default class DepopDisplay extends React.Component {
 					}
 				});
 		}, 10000);
+	}
+
+	componentDidUpdate() {
+		if (!this.state.initialLoad && (this.props.depopStoreId.length > 0)) {
+			this.updateProducts();
+			this.setState({
+				initialLoad: true
+			});
+		}
 	}
 
 	componentWillUnmount() {
