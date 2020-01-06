@@ -17,6 +17,7 @@ export default class DepopDisplay extends React.Component {
 			view: 'products',
 			scrapeStatus: '',
 			initialLoad: false,
+			productFilter: '',
 		}
 		this.toggleViewMode = this.toggleViewMode.bind(this);
 		this.updateProducts = this.updateProducts.bind(this);
@@ -25,6 +26,7 @@ export default class DepopDisplay extends React.Component {
 		this.handleProductSelect = this.handleProductSelect.bind(this);
 		this.toggleAllProductSelect = this.toggleAllProductSelect.bind(this);
 		this.handleAddProductsToShopify = this.handleAddProductsToShopify.bind(this);
+		this.updateFilter = this.updateFilter.bind(this);
 	}
 
 	componentDidMount() {
@@ -116,9 +118,16 @@ export default class DepopDisplay extends React.Component {
 			})
 	}
 
+	updateFilter(e) {
+		this.setState({
+			productFilter: e.target.value
+		});
+	}
+
 	render() {
-		const { scrapeStatus, view } = this.state;
+		const { scrapeStatus, view, productFilter } = this.state;
 		const { products, shopifyClientToken, depopStoreId, handleStoreSubmit } = this.props;
+		const filteredProducts = products.filter(product => product.description.includes(productFilter));
 		const scrapeStatusLoaded = scrapeStatus.length > 0;
 		const shopifyAuthorized = shopifyClientToken.length > 0;
 		return (
@@ -157,9 +166,12 @@ export default class DepopDisplay extends React.Component {
 												toggleViewMode={this.toggleViewMode}
 												enableEdit={checkIfAnyProductsSelected(products)}
 												shopifyAuthorized={shopifyAuthorized}
+												updateFilter={this.updateFilter}
+												filterValue={productFilter}
 											/>
 											<ProductTable 
-												products={products} 
+												products={filteredProducts} 
+												filterValue={productFilter}
 												handleProductSelect={this.handleProductSelect}
 												toggleAllProductSelect={this.toggleAllProductSelect}
 											/>
@@ -194,7 +206,7 @@ DepopDisplay.propTypes = {
 	products: PropTypes.array.isRequired
 }
 
-function TableControls({ view, toggleViewMode, updateProducts, enableEdit, shopifyAuthorized }) {
+function TableControls({ view, toggleViewMode, updateProducts, enableEdit, shopifyAuthorized, updateFilter, filterValue }) {
 	return (
 		<div className="table-controls">
 			{ view === 'products' && 
@@ -203,6 +215,7 @@ function TableControls({ view, toggleViewMode, updateProducts, enableEdit, shopi
 						{ shopifyAuthorized ? 'add selected products to shopify' : 'must authorize shopify first'}
 					</button>
 					<button onClick={updateProducts}>reload products</button>
+					<input name="filter" type="text" placeholder="filter" onChange={updateFilter} value={filterValue}/>
 				</>
 			}
 			{ view === 'edit' && 
@@ -217,7 +230,9 @@ TableControls.propTypes = {
 	toggleViewMode: PropTypes.func.isRequired,
 	updateDepopProducts: PropTypes.func,
 	enableEdit: PropTypes.bool,
-	shopifyAuthorized: PropTypes.bool
+	shopifyAuthorized: PropTypes.bool,
+	updateFilter: PropTypes.func,
+	filterValue: PropTypes.string
 }
 
 class DepopStoreInput extends React.Component {

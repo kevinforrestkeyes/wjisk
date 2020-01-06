@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { checkIfAllProductsSelected } from '../utils/helpers';
 
-export default function ProductTable({ products, handleProductSelect, toggleAllProductSelect }) {
+export default function ProductTable({ products, handleProductSelect, toggleAllProductSelect, filterValue }) {
 	const tableHeadings = products.length > 0 ? Object.keys(products[0]) : [];
+	const productsEmptyMessageText = ((products.length === 0) && (filterValue.length > 0))
+		?	`no products found matching "${filterValue}"`
+		: 'loading products...';
 
 	return (
 		<div className="product-table-container">
@@ -45,7 +48,7 @@ export default function ProductTable({ products, handleProductSelect, toggleAllP
 						</tbody>
 					</table>
 				)
-				: <p>loading products...</p>
+				: <p>{productsEmptyMessageText}</p>
 			}
 		</div>
 	)
