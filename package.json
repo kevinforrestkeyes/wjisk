@@ -21,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "md5": "^2.2.1",
+    "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.8.3",
     "react": "^16.10.1",

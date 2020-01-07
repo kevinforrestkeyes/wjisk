@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProductTable from './ProductTable';
 import ProductHandler from './ProductHandler';
+import Moment from 'moment';
 import { checkIfAnyProductsSelected } from '../utils/helpers';
 import { 
 	getDepopProducts, 
@@ -106,12 +107,13 @@ export default class DepopDisplay extends React.Component {
 		getDepopProducts(this.props.depopStoreId)
 			.then((data) => {
 				const products = data.map(product => {
-					const { description, images, price } = product;
+					const { description, images, price, timestamp } = product;
 					return {
 						selected: false,
 						description,
 						images,
-						price
+						price,
+						timestamp
 					}
 				});
 				this.props.handleDepopProductsUpdate(products);
@@ -127,7 +129,13 @@ export default class DepopDisplay extends React.Component {
 	render() {
 		const { scrapeStatus, view, productFilter } = this.state;
 		const { products, shopifyClientToken, depopStoreId, handleStoreSubmit } = this.props;
-		const filteredProducts = products.filter(product => product.description.includes(productFilter));
+		const filteredProducts = products
+			.filter(product => product.description.includes(productFilter))
+			.sort((a, b) => new Moment(b.timestamp).valueOf() - new Moment(a.timestamp).valueOf())
+			.map(product => {
+				delete product.timestamp;
+				return product;
+			});
 		const scrapeStatusLoaded = scrapeStatus.length > 0;
 		const shopifyAuthorized = shopifyClientToken.length > 0;
 		return (
