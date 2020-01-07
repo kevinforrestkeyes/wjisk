@@ -4,7 +4,7 @@ import { checkIfAllProductsSelected } from '../utils/helpers';
 
 export default function ProductTable({ products, handleProductSelect, toggleAllProductSelect, filterValue }) {
 	const tableHeadings = products.length > 0 ? Object.keys(products[0]) : [];
-	const productsEmptyMessageText = ((products.length === 0) && (filterValue.length > 0))
+	const productsEmptyMessageText = ((products.length === 0) && (filterValue !== undefined) && (filterValue.length > 0))
 		?	`no products found matching "${filterValue}"`
 		: 'loading products...';
 
